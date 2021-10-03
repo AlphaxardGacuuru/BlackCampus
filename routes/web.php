@@ -20,13 +20,11 @@ Route::get('login/github/callback', 'Auth\LoginController@handleProviderCallback
 
 Route::redirect('/', 'posts');
 
-Route::resources(
-    [
+Route::resources([
         'users' => 'UsersController',
         'posts' => 'PostsController',
         'post-likes' => 'PostLikesController',
         'post-comments' => 'PostCommentsController',
         'post-comment-likes' => 'PostCommentLikesController',
         'polls' => 'PollsController',
-    ]
-);
+    ]);
