@@ -13,18 +13,4 @@ use Illuminate\Support\Facades\Route;
 |
  */
 
-Auth::routes();
-
-Route::get('login/github', 'Auth\LoginController@redirectToProvider');
-Route::get('login/github/callback', 'Auth\LoginController@handleProviderCallback');
-
-Route::redirect('/', 'posts');
-
-Route::resources([
-        'users' => 'UsersController',
-        'posts' => 'PostsController',
-        'post-likes' => 'PostLikesController',
-        'post-comments' => 'PostCommentsController',
-        'post-comment-likes' => 'PostCommentLikesController',
-        'polls' => 'PollsController',
-    ]);
+Route::view('/{path?}', 'layouts/app');

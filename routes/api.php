@@ -17,3 +17,19 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+Auth::routes();
+
+Route::get('login/github', 'Auth\LoginController@redirectToProvider');
+Route::get('login/github/callback', 'Auth\LoginController@handleProviderCallback');
+
+Route::redirect('/', 'posts');
+
+Route::resources([
+    'users' => 'UsersController',
+    'posts' => 'PostsController',
+    'post-likes' => 'PostLikesController',
+    'post-comments' => 'PostCommentsController',
+    'post-comment-likes' => 'PostCommentLikesController',
+    'polls' => 'PollsController',
+]);

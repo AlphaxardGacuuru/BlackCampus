@@ -1,0 +1,24 @@
+{
+	"name": "Black Campus",
+	"short_name": "Black Campus",
+	"start_url": ".",
+	"display": "standalone",
+	"theme_color": "#182B5C",
+	"background_color": "#000",
+	"orientation": "portrait-primary",
+	"description": "A Campus streaming app",
+	"icons": [
+	{
+            "src": "storage/img/musical-note-black-gold-512.png",
+            "sizes": "512x512",
+            "type": "image/png",
+			"purpose": "maskable"
+	},
+	{
+            "src": "storage/img/musical-note-black-gold-256.png",
+            "sizes": "256x256",
+            "type": "image/png",
+			"purpose": "any"
+	}
+]
+}
