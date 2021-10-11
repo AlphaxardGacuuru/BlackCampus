@@ -2,13 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Follows;
-use App\Polls;
-use App\Posts;
-use App\User;
+use App\Notifications;
 use Illuminate\Http\Request;
 
-class UsersController extends Controller
+class NotificationsController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -17,7 +14,7 @@ class UsersController extends Controller
      */
     public function index()
     {
-        return User::all();
+        return Notifications::all();
     }
 
     /**
@@ -44,26 +41,21 @@ class UsersController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  \App\Notifications  $notifications
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Notifications $notifications)
     {
-        $posts = Posts::orderBy('id', 'desc')->get();
-        $users = User::orderBy('id', 'desc')->get();
-        $follows = Follows::get();
-        $polls = Polls::get();
-
-        return view('pages/user')->with(['follows' => $follows, 'posts' => $posts, 'polls' => $polls, 'id' => $id, 'users' => $users]);
+        //
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  \App\Notifications  $notifications
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Notifications $notifications)
     {
         //
     }
@@ -72,10 +64,10 @@ class UsersController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \App\Notifications  $notifications
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Notifications $notifications)
     {
         //
     }
@@ -83,10 +75,10 @@ class UsersController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  \App\Notifications  $notifications
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Notifications $notifications)
     {
         //
     }
