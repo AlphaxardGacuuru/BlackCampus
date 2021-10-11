@@ -55,9 +55,9 @@ const TopNav = (props) => {
 								</Link>
 							</li>
 							<li className='nav-item active'>
-								<Link to='/video-charts'
+								<Link to='/leaders'
 									style={{
-										color: location.pathname == "/video-charts" || location.pathname == "/audio-charts" ?
+										color: location.pathname == "/leaders" ?
 											"#D0B216" : "white"
 									}}
 									className='nav-link'

@@ -12,12 +12,12 @@ const TopNavLinks = (props) => {
 			axios.post(`${props.url}/api/logout`)
 				.then(res => {
 					props.setMessage("Logged out")
-					axios.get(`${props.url}/api/home`).then((res) => props.setAuth({
+					props.setAuth({
 						"name": "Guest",
 						"username": "@guest",
 						"pp": "profile-pics/male_avatar.png",
 						"account_type": "normal"
-					}))
+					})
 				})
 				.catch(err => {
 					const resErrors = err.response.data.errors
@@ -156,15 +156,6 @@ const TopNavLinks = (props) => {
 								<path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z" />
 							</svg>
 						</h6>
-					</Link>
-					<Link to='/videos' className="p-3 dropdown-item border-bottom">
-						<h6>Studio</h6>
-					</Link>
-					<Link to="/home/create" className="p-3 dropdown-item border-bottom">
-						<h6>Settings</h6>
-					</Link>
-					<Link to="/help" className="p-3 dropdown-item border-bottom">
-						<h6>Help Centre</h6>
 					</Link>
 					<a href="#" className="p-3 dropdown-item" onClick={logout}>
 						<h6>Logout</h6>

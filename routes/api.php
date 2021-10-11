@@ -23,8 +23,6 @@ Auth::routes();
 Route::get('login/github', 'Auth\LoginController@redirectToProvider');
 Route::get('login/github/callback', 'Auth\LoginController@handleProviderCallback');
 
-Route::redirect('/', 'posts');
-
 Route::resources([
     'users' => 'UsersController',
     'posts' => 'PostsController',

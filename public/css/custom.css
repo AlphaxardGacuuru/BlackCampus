@@ -40,116 +40,6 @@ a:focus {
     font-weight: 300;
 }
 
-.sonar-btn {
-    position: relative;
-    z-index: 1;
-    min-width: 180px;
-    height: 66px;
-    border: 1px solid;
-    border-color: #A51F26;
-    text-transform: uppercase;
-    color: #A51F26;
-    font-size: 12px;
-    letter-spacing: 1px;
-    border-radius: 0;
-    line-height: 64px;
-    padding: 0;
-    background-color: #ffffff;
-}
-
-/* .sonar-btn:hover, */
-.sonar-btn:focus {
-    background-color: #A51F26;
-    font-size: 12px;
-    color: #ffffff;
-}
-
-.sonar-btn.white-btn {
-    border-color: #ffffff;
-    color: #ffffff;
-    background-color: transparent;
-}
-
-.sonar-btn.white-btn:focus {
-    background-color: #ffffff;
-    color: #A51F26;
-}
-
-/*My Sonar Button*/
-.mysonar-btn {
-    position: relative;
-    z-index: 1;
-    min-width: 90px;
-    height: 33px;
-    border: 1px solid;
-    border-color: #A51F26;
-    text-transform: uppercase;
-    color: #A51F26;
-    font-size: 12px;
-    letter-spacing: 1px;
-    border-radius: 0;
-    line-height: 32px;
-    padding: 0;
-    background-color: #ffffff;
-}
-
-.mysonar-btn:focus {
-    background-color: #A51F26;
-    font-size: 12px;
-    color: #ffffff;
-}
-
-.mysonar-btn.white-btn {
-    border-color: #ffffff;
-    color: #ffffff;
-    background-color: transparent;
-}
-
-.mysonar-btn.white-btn:focus {
-    background-color: #ffffff;
-    color: #A51F26;
-}
-
-.mysonar-btn.green-btn {
-    border-color: green;
-    color: green;
-    background-color: transparent;
-}
-
-.mysonar-btn.green-btn:focus {
-    background-color: green;
-    color: #ffffff;
-}
-
-.mysonar-btn.btn-2 {
-    background-color: #A51F26;
-    font-size: 12px;
-    color: #ffffff;
-}
-
-.mysonar-btn.btn-3 {
-    background-color: #A51F26;
-    color: #ffffff;
-}
-
-.mysonar-btn.btn-3::before {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    background-color: transparent;
-    border: 1px solid;
-    border-color: #A51F26;
-    right: -6px;
-    bottom: -6px;
-    content: '';
-    z-index: -100;
-}
-
-.mysonar-btn.btn-3:focus {
-    background-color: #A51F26;
-    color: #ffffff;
-}
-
 /* :: Header Area CSS */
 .header-area {
     position: fixed;
@@ -200,7 +90,7 @@ a:focus {
 }
 
 .header-area.sticky {
-    background-color: #A51F26;
+    background-color: #182B5C;
 }
 
 @media only screen and (max-width: 767px) {
@@ -215,7 +105,7 @@ a:focus {
     height: 100%;
     top: 0;
     right: -500px;
-    background-color: #A51F26;
+    background-color: #182B5C;
     z-index: 99999;
     text-align: center;
     -webkit-box-orient: vertical;
@@ -342,233 +232,6 @@ a:focus {
     right: 0;
 }
 
-/* :: Contact Area CSS */
-.contact-form h2 {
-    font-size: 72px;
-    margin-bottom: 15px;
-    font-weight: 100;
-}
-
-@media only screen and (min-width: 992px) and (max-width: 1199px) {
-    .contact-form h2 {
-        font-size: 55px;
-    }
-}
-
-@media only screen and (min-width: 768px) and (max-width: 991px) {
-    .contact-form h2 {
-        font-size: 36px;
-    }
-}
-
-@media only screen and (max-width: 767px) {
-    .contact-form h2 {
-        font-size: 30px;
-    }
-}
-
-.contact-form h4 {
-    font-size: 48px;
-    margin-bottom: 80px;
-}
-
-@media only screen and (min-width: 768px) and (max-width: 991px) {
-    .contact-form h4 {
-        font-size: 30px;
-    }
-}
-
-@media only screen and (max-width: 767px) {
-    .contact-form h4 {
-        font-size: 24px;
-    }
-}
-
-.contact-form .form-group {
-    margin-bottom: 30px;
-}
-
-.contact-form .form-control {
-    width: 100%;
-    height: 60px;
-    padding: 0 15px;
-    border: none;
-    border-bottom: 1px solid;
-    border-color: #c0c0c0;
-    border-radius: 0;
-    font-size: 12px;
-    font-style: italic;
-    color: #232323;
-    background-color: transparent;
-}
-
-.contact-form .form-control:focus,
-.contact-form .form-control:hover {
-    box-shadow: none;
-}
-
-.contact-form textarea {
-    margin-bottom: 50px;
-}
-
-.contact-form textarea.form-control {
-    height: 220px;
-    padding: 15px;
-}
-
-/* Accordians */
-.single-accordion.panel {
-    background-color: #ffffff;
-    border: 0 solid transparent;
-    border-radius: 4px;
-    box-shadow: 0 0 0 transparent;
-    margin-bottom: 15px;
-}
-
-.single-accordion:last-of-type {
-    margin-bottom: 0;
-}
-
-.single-accordion h6 {
-    margin-bottom: 0;
-    text-transform: uppercase;
-}
-
-.single-accordion h6 a {
-    background-color: #1d1d1d;
-    border-radius: 0;
-    color: #ffffff;
-    display: block;
-    margin: 0;
-    padding: 20px 60px 20px 20px;
-    position: relative;
-    font-size: 14px;
-    text-transform: capitalize;
-    font-weight: 500;
-}
-
-.single-accordion h6 a span {
-    font-size: 10px;
-    position: absolute;
-    right: 20px;
-    text-align: center;
-    top: 24px;
-}
-
-.single-accordion h6 a span.accor-open {
-    opacity: 0;
-    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
-    filter: alpha(opacity=0);
-}
-
-.single-accordion h6 a.collapsed {
-    background-color: #A51F26;
-    color: #ffffff;
-}
-
-.single-accordion h6 a.collapsed span.accor-close {
-    opacity: 0;
-    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
-    filter: alpha(opacity=0);
-}
-
-.single-accordion h6 a.collapsed span.accor-open {
-    opacity: 1;
-    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=100)";
-    filter: alpha(opacity=100);
-}
-
-.single-accordion .accordion-content {
-    border-top: 0 solid transparent;
-    box-shadow: none;
-}
-
-.single-accordion .accordion-content p {
-    padding: 20px 15px 5px;
-    margin-bottom: 0;
-}
-
-/* :: Call to Action Area CSS */
-.call-to-action-content {
-    text-align: center;
-}
-
-.call-to-action-content h2 {
-    font-weight: 100;
-    font-size: 72px;
-    margin-bottom: 15px;
-}
-
-@media only screen and (min-width: 992px) and (max-width: 1199px) {
-    .call-to-action-content h2 {
-        font-size: 55px;
-    }
-}
-
-@media only screen and (min-width: 768px) and (max-width: 991px) {
-    .call-to-action-content h2 {
-        font-size: 36px;
-    }
-}
-
-@media only screen and (max-width: 767px) {
-    .call-to-action-content h2 {
-        font-size: 30px;
-    }
-}
-
-.call-to-action-content h5 {
-    font-size: 48px;
-    margin-bottom: 0;
-}
-
-@media only screen and (min-width: 768px) and (max-width: 991px) {
-    .call-to-action-content h5 {
-        font-size: 30px;
-    }
-}
-
-@media only screen and (max-width: 767px) {
-    .call-to-action-content h5 {
-        font-size: 24px;
-    }
-}
-
-.sonar-call-to-action-area {
-    position: relative;
-    z-index: 1;
-    overflow: hidden;
-}
-
-.sonar-call-to-action-area .backEnd-content h2 {
-    position: absolute;
-    font-size: 230px;
-    color: #f0f0f0;
-    z-index: -1;
-    top: -30px;
-    left: -3%;
-}
-
-@media only screen and (min-width: 992px) and (max-width: 1199px) {
-    .sonar-call-to-action-area .backEnd-content h2 {
-        font-size: 170px;
-        top: 0;
-    }
-}
-
-@media only screen and (min-width: 768px) and (max-width: 991px) {
-    .sonar-call-to-action-area .backEnd-content h2 {
-        font-size: 150px;
-        top: 0;
-    }
-}
-
-@media only screen and (max-width: 767px) {
-    .sonar-call-to-action-area .backEnd-content h2 {
-        font-size: 100px;
-    }
-}
-
 /*Floating button*/
 #floatBtn {
     /* display: block;*/
@@ -587,7 +250,7 @@ a:focus {
     /* Remove outline */
     cursor: pointer;
     /* Add a mouse pointer on hover */
-    background-color: #A51F26;
+    background-color: #182B5C;
     border-radius: 50%;
     box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.3);
     color: #ffffff;
@@ -628,7 +291,7 @@ a:focus {
     visibility: hidden;
     min-width: 250px;
     margin-left: -125px;
-    background-color: #A51F26;
+    background-color: #182B5C;
     color: #fff;
     text-align: center;
     border-radius: 2px;
@@ -664,100 +327,6 @@ a:focus {
         max-width: 80%;
         font-size: 11px;
 
-    }
-}
-
-/*        CSS for unlove snack bar*/
-#unloveSnackbar {
-    visibility: hidden;
-    min-width: 250px;
-    margin-left: -125px;
-    background-color: #333;
-    color: #fff;
-    text-align: center;
-    border-radius: 2px;
-    padding: 16px;
-    position: fixed;
-    z-index: 1;
-    left: 50%;
-    bottom: 30px;
-    font-size: 17px;
-}
-
-#unloveSnackbar.show {
-    visibility: visible;
-    -webkit-animation: fadein 0.5s, fadeout 0.5s 2.5s;
-    animation: fadein 0.5s, fadeout 0.5s 2.5s;
-}
-
-/*        CSS for love snack bar*/
-#loveSnackbar {
-    visibility: hidden;
-    min-width: 250px;
-    margin-left: -125px;
-    background-color: #333;
-    color: #fff;
-    text-align: center;
-    border-radius: 2px;
-    padding: 16px;
-    position: fixed;
-    z-index: 1;
-    left: 50%;
-    bottom: 30px;
-    font-size: 17px;
-}
-
-#loveSnackbar.show {
-    visibility: visible;
-    -webkit-animation: fadein 0.5s, fadeout 0.5s 2.5s;
-    animation: fadein 0.5s, fadeout 0.5s 2.5s;
-}
-
-@-webkit-keyframes fadein {
-    from {
-        bottom: 0;
-        opacity: 0;
-    }
-
-    to {
-        bottom: 30px;
-        opacity: 1;
-    }
-}
-
-@keyframes fadein {
-    from {
-        bottom: 0;
-        opacity: 0;
-    }
-
-    to {
-        bottom: 30px;
-        opacity: 1;
-    }
-}
-
-@-webkit-keyframes fadeout {
-    from {
-        bottom: 30px;
-        opacity: 1;
-    }
-
-    to {
-        bottom: 0;
-        opacity: 0;
-    }
-}
-
-@keyframes fadeout {
-    from {
-        bottom: 30px;
-        opacity: 1;
-    }
-
-    to {
-        bottom: 0;
-        opacity: 0;
     }
 }
 
@@ -845,27 +414,6 @@ div.scrollmenu a:hover {
   .compress {
     font-size: 13px; 
     } */
-}
-
-/*Respoonsive Iframe*/
-.resp-container {
-    position: relative;
-    overflow: hidden;
-    padding-top: 56.25%;
-}
-
-.resp-iframe {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    border: 0;
-}
-
-/*Styling for Errors messages*/
-.error {
-    color: #FF0000;
 }
 
 /*Css for black ring around avatar*/
@@ -1008,30 +556,7 @@ div.hidden-scroll span {
     padding: 5px 20px;
     border-radius: 20px;
     color: white;
-    background-color: #A51F26;
-}
-
-/*CSS for scrollmenu in charts*/
-#chartsMenu span {
-    padding: 0 10px 0 10px;
-    margin: 0 0 0 0;
-}
-
-@media only screen and (max-width: 767px) {
-    a {
-        text-decoration: none;
-        outline: none;
-        font-size: 14px;
-        font-weight: 700;
-    }
-
-    a:hover,
-    a:focus {
-        text-decoration: none;
-        outline: none;
-        font-size: 12px;
-        font-weight: 400;
-    }
+    background-color: #182B5C;
 }
 
 /* :: Header Area CSS */
@@ -1044,7 +569,7 @@ div.hidden-scroll span {
     height: auto;
     -webkit-transition-duration: 500ms;
     transition-duration: 500ms;
-    background-color: #A51F26;
+    background-color: #182B5C;
     padding: 0px 0px;
     display: none;
 }
@@ -1088,7 +613,7 @@ div.hidden-scroll span {
 }
 
 .bottomNav.sticky {
-    background-color: #A51F26;
+    background-color: #182B5C;
 }
 
 @media only screen and (max-width: 767px) {
@@ -1159,7 +684,7 @@ div.hidden-scroll span {
 
 /* the draggable scrolling handle */
 ::-webkit-scrollbar-thumb {
-    background: #A51F26;
+    background: #182B5C;
     border-radius: 20px;
     border: 1px solid white;
 }
@@ -1167,7 +692,7 @@ div.hidden-scroll span {
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
     background: #fff;
-    border: 1px solid #A51F26;
+    border: 1px solid #182B5C;
 }
 
 /*the buttons on the scrollbar (arrows pointing upwards and downwards)*/
@@ -1183,18 +708,6 @@ div.hidden-scroll span {
 
 /*the draggable resizing handle that appears at the bottom corner of some elements*/
 ::-webkit-resizer {}
-
-/*Horizontal Scroll buttons*/
-.myScrollBtn {
-    position: absolute;
-    top: 9rem;
-    z-index: 99;
-    border-radius: 50%;
-    min-width: 2rem;
-    cursor: pointer;
-    width: 3rem;
-    height: 3rem;
-}
 
 /* crop thumbnails */
 .thumbnail {
