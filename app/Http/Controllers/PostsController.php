@@ -15,28 +15,13 @@ use Illuminate\Support\Facades\Storage;
 class PostsController extends Controller
 {
     /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        $this->middleware('auth', ['except' => ['index']]);
-    }
-
-    /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
     public function index()
     {
-        $posts = Posts::orderBy('id', 'desc')->get();
-        $users = User::orderBy('id', 'desc')->get();
-        $follows = Follows::get();
-        $polls = Polls::get();
-
-        return view('/pages/index')->with(['posts' => $posts, 'users' => $users, 'follows' => $follows, 'polls' => $polls]);
+		//
     }
 
     /**

@@ -24,10 +24,13 @@ Route::get('login/github', 'Auth\LoginController@redirectToProvider');
 Route::get('login/github/callback', 'Auth\LoginController@handleProviderCallback');
 
 Route::resources([
-    'users' => 'UsersController',
+    'home' => 'HomeController',
+	'follows' => "Follows",
+	'follows-notifications' => "FollowNotifications",
     'posts' => 'PostsController',
     'post-likes' => 'PostLikesController',
     'post-comments' => 'PostCommentsController',
     'post-comment-likes' => 'PostCommentLikesController',
     'polls' => 'PollsController',
+    'users' => 'UsersController',
 ]);

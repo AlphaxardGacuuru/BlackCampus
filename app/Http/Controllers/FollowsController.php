@@ -14,7 +14,7 @@ class FollowsController extends Controller
      */
     public function index()
     {
-        //
+        return Follows::all();
     }
 
     /**

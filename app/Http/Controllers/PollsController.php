@@ -14,7 +14,7 @@ class PollsController extends Controller
      */
     public function index()
     {
-        //
+        return Polls::all();
     }
 
     /**

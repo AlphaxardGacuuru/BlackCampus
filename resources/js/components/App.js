@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import ReactDOM from 'react-dom';
 import { HashRouter as Router, Route, Redirect, useHistory, useLocation } from 'react-router-dom'
 
@@ -12,7 +12,7 @@ function App() {
 	// Declare states
 	const [url, setUrl] = useState(window.location.href.match(/https/) ?
 		'https://campus.black.co.ke' :
-		'http://localhost:3000')
+		'http://localhost:8001')
 	const [auth, setAuth] = useState({
 		"name": "Guest",
 		"username": "@guest",
@@ -25,11 +25,43 @@ function App() {
 	const [notifications, setNotifications] = useState([])
 	const [followNotifications, setFollowNotifications] = useState([])
 
+	// Reset Messages and Errors to null after 3 seconds
+	if (errors.length > 0 || message.length > 0) {
+		setTimeout(() => setErrors([]), 3000);
+		setTimeout(() => setMessage(''), 3000);
+	}
+
+	// Fetch data on page load
+	useEffect(() => {
+		// Fetch Auth
+		axios.get(`${url}/api/home`)
+			// .then((res) => setAuth(res.data))
+			.catch(() => setErrors(['Failed to fetch auth']))
+
+		// Fetch Follows Notifications
+		axios.get(`${url}/api/follow-notifications`)
+			.then((res) => setFollowNotifications(res.data))
+			.catch(() => setErrors(['Failed to fetch follow notifications']))
+
+		// Fetch Notifications
+		axios.get(`${url}/api/notifications`)
+			.then((res) => setNotifications(res.data))
+			.catch(() => setErrors(['Failed to fetch notifications']))
+
+		//Fetch Users
+		axios.get(`${url}/api/users`)
+			.then((res) => setUsers(res.data))
+			.catch(() => setErrors(['Failed to fetch users']))
+
+	}, [])
+
 	return (
 		<Router>
 			<TopNav {...{ url, auth, setMessage, setErrors, setAuth, notifications, followNotifications }} />
 
 			<BottomNav {...{ url, auth, setMessage, setErrors, setAuth }} />
+
+			<Messages {...{ message, errors }} />
 		</Router>
 	);
 }

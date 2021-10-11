@@ -695,19 +695,10 @@ div.hidden-scroll span {
     border: 1px solid #182B5C;
 }
 
-/*the buttons on the scrollbar (arrows pointing upwards and downwards)*/
-::-webkit-scrollbar-button {}
-
 /*the track (progress bar) NOT covered by the handle*/
 ::-webkit-scrollbar-track-piece {
     border: 1px solid white;
 }
-
-/*the bottom corner of the scrollbar, where both horizontal and vertical scrollbars meet.*/
-::-webkit-scrollbar-corner {}
-
-/*the draggable resizing handle that appears at the bottom corner of some elements*/
-::-webkit-resizer {}
 
 /* crop thumbnails */
 .thumbnail {

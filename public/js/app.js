@@ -2163,7 +2163,7 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 function App() {
   // Declare states
-  var _useState = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(window.location.href.match(/https/) ? 'https://campus.black.co.ke' : 'http://localhost:3000'),
+  var _useState = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(window.location.href.match(/https/) ? 'https://campus.black.co.ke' : 'http://localhost:8001'),
       _useState2 = _slicedToArray(_useState, 2),
       url = _useState2[0],
       setUrl = _useState2[1];
@@ -2196,8 +2196,44 @@ function App() {
   var _useState11 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]),
       _useState12 = _slicedToArray(_useState11, 2),
       followNotifications = _useState12[0],
-      setFollowNotifications = _useState12[1];
+      setFollowNotifications = _useState12[1]; // Reset Messages and Errors to null after 3 seconds
 
+
+  if (errors.length > 0 || message.length > 0) {
+    setTimeout(function () {
+      return setErrors([]);
+    }, 3000);
+    setTimeout(function () {
+      return setMessage('');
+    }, 3000);
+  } // Fetch data on page load
+
+
+  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
+    // Fetch Auth
+    axios.get("".concat(url, "/api/home")) // .then((res) => setAuth(res.data))
+    ["catch"](function () {
+      return setErrors(['Failed to fetch auth']);
+    }); // Fetch Follows Notifications
+
+    axios.get("".concat(url, "/api/follow-notifications")).then(function (res) {
+      return setFollowNotifications(res.data);
+    })["catch"](function () {
+      return setErrors(['Failed to fetch follow notifications']);
+    }); // Fetch Notifications
+
+    axios.get("".concat(url, "/api/notifications")).then(function (res) {
+      return setNotifications(res.data);
+    })["catch"](function () {
+      return setErrors(['Failed to fetch notifications']);
+    }); //Fetch Users
+
+    axios.get("".concat(url, "/api/users")).then(function (res) {
+      return setUsers(res.data);
+    })["catch"](function () {
+      return setErrors(['Failed to fetch users']);
+    });
+  }, []);
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)(react_router_dom__WEBPACK_IMPORTED_MODULE_6__.HashRouter, {
     children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_TopNav__WEBPACK_IMPORTED_MODULE_2__["default"], {
       url: url,
@@ -2213,6 +2249,9 @@ function App() {
       setMessage: setMessage,
       setErrors: setErrors,
       setAuth: setAuth
+    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_Messages__WEBPACK_IMPORTED_MODULE_3__["default"], {
+      message: message,
+      errors: errors
     })]
   });
 }
@@ -2425,24 +2464,26 @@ __webpack_require__.r(__webpack_exports__);
 var Messages = function Messages(_ref) {
   var message = _ref.message,
       errors = _ref.errors;
-  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)("h6", {
-    id: "snackbar",
-    className: errors.length > 0 || message.length > 0 ? 'show' : '',
-    children: [message && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("div", {
-      className: "bg-success p-2",
-      style: {
-        borderRadius: "30px"
-      },
-      children: message
-    }), errors.map(function (error, index) {
-      return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("div", {
-        className: "bg-danger p-2 mt-2",
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("center", {
+    children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)("h6", {
+      id: "snackbar",
+      className: errors.length > 0 || message.length > 0 ? 'show' : '',
+      children: [message && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("div", {
+        className: "bg-success p-2",
         style: {
           borderRadius: "30px"
         },
-        children: error
-      }, index);
-    })]
+        children: message
+      }), errors.map(function (error, index) {
+        return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("div", {
+          className: "bg-danger p-2 mt-2",
+          style: {
+            borderRadius: "30px"
+          },
+          children: error
+        }, index);
+      })]
+    })
   });
 };
 
