@@ -6,6 +6,8 @@ import TopNav from './TopNav'
 import Messages from './Messages'
 import BottomNav from './BottomNav'
 
+import Index from '../pages/Index';
+
 // import LoginPopUp from '../auth/LoginPopUp';
 
 function App() {
@@ -58,6 +60,10 @@ function App() {
 	return (
 		<Router>
 			<TopNav {...{ url, auth, setMessage, setErrors, setAuth, notifications, followNotifications }} />
+
+			<Route path="/" exact render={() => (
+				<Index {...{ url, auth, setMessage, setErrors }} />
+			)} />
 
 			<BottomNav {...{ url, auth, setMessage, setErrors, setAuth }} />
 

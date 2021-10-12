@@ -16,6 +16,11 @@ class UserSeeder extends Seeder
         //     'email' => Str::random(10) . '@gmail.com',
         //     'password' => Hash::make('password'),
         // ]);
-        factory(\App\User::class, 3)->create();
+
+        factory(\App\User::class, 3)->create()->each(function ($user) {
+            $user->posts()->save(factory(App\Posts::class)->make([
+				'user_id' => $user->id
+			]));
+        });
     }
 }

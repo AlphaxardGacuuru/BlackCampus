@@ -2134,11 +2134,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-dom */ "./node_modules/react-dom/index.js");
-/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/node_modules/react-router/esm/react-router.js");
 /* harmony import */ var _TopNav__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./TopNav */ "./resources/js/components/TopNav.js");
 /* harmony import */ var _Messages__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Messages */ "./resources/js/components/Messages.js");
 /* harmony import */ var _BottomNav__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./BottomNav */ "./resources/js/components/BottomNav.js");
-/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+/* harmony import */ var _pages_Index__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../pages/Index */ "./resources/js/pages/Index.js");
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
 function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
 
 function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
@@ -2150,6 +2152,7 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
 function _iterableToArrayLimit(arr, i) { var _i = arr == null ? null : typeof Symbol !== "undefined" && arr[Symbol.iterator] || arr["@@iterator"]; if (_i == null) return; var _arr = []; var _n = true; var _d = false; var _s, _e; try { for (_i = _i.call(arr); !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
 
 function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+
 
 
 
@@ -2234,8 +2237,8 @@ function App() {
       return setErrors(['Failed to fetch users']);
     });
   }, []);
-  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)(react_router_dom__WEBPACK_IMPORTED_MODULE_6__.HashRouter, {
-    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_TopNav__WEBPACK_IMPORTED_MODULE_2__["default"], {
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)(react_router_dom__WEBPACK_IMPORTED_MODULE_7__.HashRouter, {
+    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_TopNav__WEBPACK_IMPORTED_MODULE_2__["default"], {
       url: url,
       auth: auth,
       setMessage: setMessage,
@@ -2243,13 +2246,24 @@ function App() {
       setAuth: setAuth,
       notifications: notifications,
       followNotifications: followNotifications
-    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_BottomNav__WEBPACK_IMPORTED_MODULE_4__["default"], {
+    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_8__.Route, {
+      path: "/",
+      exact: true,
+      render: function render() {
+        return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_pages_Index__WEBPACK_IMPORTED_MODULE_5__["default"], {
+          url: url,
+          auth: auth,
+          setMessage: setMessage,
+          setErrors: setErrors
+        });
+      }
+    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_BottomNav__WEBPACK_IMPORTED_MODULE_4__["default"], {
       url: url,
       auth: auth,
       setMessage: setMessage,
       setErrors: setErrors,
       setAuth: setAuth
-    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_Messages__WEBPACK_IMPORTED_MODULE_3__["default"], {
+    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_Messages__WEBPACK_IMPORTED_MODULE_3__["default"], {
       message: message,
       errors: errors
     })]
@@ -2259,7 +2273,7 @@ function App() {
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (App);
 
 if (document.getElementById('app')) {
-  react_dom__WEBPACK_IMPORTED_MODULE_1__.render( /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(App, {}), document.getElementById('app'));
+  react_dom__WEBPACK_IMPORTED_MODULE_1__.render( /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(App, {}), document.getElementById('app'));
 }
 
 /***/ }),
@@ -2401,6 +2415,42 @@ var Bottomnav = function Bottomnav(props) {
 };
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Bottomnav);
+
+/***/ }),
+
+/***/ "./resources/js/components/Button.js":
+/*!*******************************************!*\
+  !*** ./resources/js/components/Button.js ***!
+  \*******************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+
+
+
+var Button = function Button(_ref) {
+  var btnStyle = _ref.btnStyle,
+      btnClass = _ref.btnClass,
+      btnText = _ref.btnText,
+      onClick = _ref.onClick;
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("button", {
+    style: btnStyle,
+    className: btnClass,
+    onClick: onClick,
+    children: btnText
+  });
+};
+
+Button.defaultProps = {
+  btnClass: 'sonar-btn'
+};
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Button);
 
 /***/ }),
 
@@ -2925,6 +2975,786 @@ var TopNavLinks = function TopNavLinks(props) {
 };
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (TopNavLinks);
+
+/***/ }),
+
+/***/ "./resources/js/pages/Index.js":
+/*!*************************************!*\
+  !*** ./resources/js/pages/Index.js ***!
+  \*************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/node_modules/react-router/esm/react-router.js");
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _components_Img__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../components/Img */ "./resources/js/components/Img.js");
+/* harmony import */ var _components_Button__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../components/Button */ "./resources/js/components/Button.js");
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
+
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
+function _iterableToArrayLimit(arr, i) { var _i = arr == null ? null : typeof Symbol !== "undefined" && arr[Symbol.iterator] || arr["@@iterator"]; if (_i == null) return; var _arr = []; var _n = true; var _d = false; var _s, _e; try { for (_i = _i.call(arr); !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
+
+function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+
+
+
+
+
+
+
+
+
+
+var Index = function Index(props) {
+  var history = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_5__.useHistory)();
+
+  var _useState = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]),
+      _useState2 = _slicedToArray(_useState, 2),
+      posts = _useState2[0],
+      setPosts = _useState2[1];
+
+  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
+    axios__WEBPACK_IMPORTED_MODULE_1___default().get("".concat(props.url, "/api/posts")).then(function (res) {
+      return setPosts(res.data);
+    })["catch"](function (err) {
+      return setErrors([res.data]);
+    });
+  }, []); // Function for following musicians
+
+  var onFollow = function onFollow(musician) {
+    axios__WEBPACK_IMPORTED_MODULE_1___default().get('/sanctum/csrf-cookie').then(function () {
+      axios__WEBPACK_IMPORTED_MODULE_1___default().post("".concat(props.url, "/api/follows"), {
+        musician: musician
+      }).then(function (res) {
+        props.setMessage(res.data);
+        axios__WEBPACK_IMPORTED_MODULE_1___default().get("".concat(props.url, "/api/follows")).then(function (res) {
+          return props.setFollows(res.data);
+        });
+      })["catch"](function (err) {
+        var resErrors = err.response.data.errors;
+        var resError;
+        var newError = [];
+
+        for (resError in resErrors) {
+          newError.push(resErrors[resError]);
+        } // Get other errors
+
+
+        newError.push(err.response.data.message);
+        props.setErrors(newError);
+      });
+    });
+  }; // Function for liking posts
+
+
+  var onPostLike = function onPostLike(post) {
+    axios__WEBPACK_IMPORTED_MODULE_1___default().get('sanctum/csrf-cookie').then(function () {
+      axios__WEBPACK_IMPORTED_MODULE_1___default().post("".concat(props.url, "/api/post-likes"), {
+        post: post
+      }).then(function (res) {
+        props.setMessage(res.data);
+        axios__WEBPACK_IMPORTED_MODULE_1___default().get("".concat(props.url, "/api/post-likes")).then(function (res) {
+          return props.setPostLikes(res.data);
+        });
+      })["catch"](function (err) {
+        var resErrors = err.response.data.errors;
+        var resError;
+        var newError = [];
+
+        for (resError in resErrors) {
+          newError.push(resErrors[resError]);
+        } // Get other errors
+
+
+        newError.push(err.response.data.message);
+        props.setErrors(newError);
+      });
+    });
+  }; // Function for deleting posts
+
+
+  var onDeletePost = function onDeletePost(id) {
+    axios__WEBPACK_IMPORTED_MODULE_1___default().get('sanctum/csrf-cookie').then(function () {
+      axios__WEBPACK_IMPORTED_MODULE_1___default()["delete"]("".concat(props.url, "/api/posts/").concat(id)).then(function (res) {
+        props.setMessage(res.data);
+        axios__WEBPACK_IMPORTED_MODULE_1___default().get("".concat(props.url, "/api/posts")).then(function (res) {
+          return props.setPosts(res.data);
+        });
+      })["catch"](function (err) {
+        var resErrors = err.response.data.errors;
+        var resError;
+        var newError = [];
+
+        for (resError in resErrors) {
+          newError.push(resErrors[resError]);
+        } // Get other errors
+
+
+        newError.push(err.response.data.message);
+        props.setErrors(newError);
+      });
+    });
+  }; // Function for voting in poll
+
+
+  var onPoll = function onPoll(post, parameter) {
+    axios__WEBPACK_IMPORTED_MODULE_1___default().get('sanctum/csrf-cookie').then(function () {
+      axios__WEBPACK_IMPORTED_MODULE_1___default().post("".concat(props.url, "/api/polls"), {
+        post: post,
+        parameter: parameter
+      }).then(function (res) {
+        props.setMessage(res.data);
+        axios__WEBPACK_IMPORTED_MODULE_1___default().get("".concat(props.url, "/api/polls")).then(function (res) {
+          return props.setPolls(res.data);
+        });
+      })["catch"](function (err) {
+        var resErrors = err.response.data.errors;
+        var resError;
+        var newError = [];
+
+        for (resError in resErrors) {
+          newError.push(resErrors[resError]);
+        } // Get other errors
+
+
+        newError.push(err.response.data.message);
+        props.setErrors(newError);
+      });
+    });
+  };
+
+  var percentage = 100;
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.Fragment, {
+    children: [props.auth.account_type == 'leader' && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_6__.Link, {
+      to: "/post-create",
+      id: "floatBtn",
+      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("svg", {
+        xmlns: "http://www.w3.org/2000/svg",
+        width: "30",
+        height: "30",
+        fill: "currentColor",
+        className: "bi bi-pen",
+        viewBox: "0 0 16 16",
+        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("path", {
+          d: "M13.498.795l.149-.149a1.207 1.207 0 1 1 1.707 1.708l-.149.148a1.5 1.5 0 0 1-.059 2.059L4.854 14.854a.5.5 0 0 1-.233.131l-4 1a.5.5 0 0 1-.606-.606l1-4a.5.5 0 0 1 .131-.232l9.642-9.642a.5.5 0 0 0-.642.056L6.854 4.854a.5.5 0 1 1-.708-.708L9.44.854A1.5 1.5 0 0 1 11.5.796a1.5 1.5 0 0 1 1.998-.001zm-.644.766a.5.5 0 0 0-.707 0L1.95 11.756l-.764 3.057 3.057-.764L14.44 3.854a.5.5 0 0 0 0-.708l-1.585-1.585z"
+        })
+      })
+    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
+      className: "row",
+      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
+        className: "col-sm-1 hidden"
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
+        className: "col-sm-3 hidden",
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
+          className: "d-flex border",
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
+            className: "p-2",
+            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
+              className: "avatar-thumbnail-sm",
+              style: {
+                borderRadius: "50%"
+              },
+              children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_6__.Link, {
+                to: "/profile/" + props.auth.username,
+                children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_components_Img__WEBPACK_IMPORTED_MODULE_2__["default"], {
+                  src: '/storage/' + props.auth.pp,
+                  width: "100px",
+                  height: "100px",
+                  alt: "avatar"
+                })
+              })
+            })
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
+            className: "p-2 flex-grow-1",
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("h5", {
+              className: "m-0 p-0",
+              style: {
+                width: "160px",
+                whiteSpace: "nowrap",
+                overflow: "hidden",
+                textOverflow: "clip"
+              },
+              children: props.auth.name
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("h6", {
+              className: "m-0 p-0",
+              style: {
+                width: "140px",
+                whiteSpace: "nowrap",
+                overflow: "hidden",
+                textOverflow: "clip"
+              },
+              children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("small", {
+                children: props.auth.username
+              })
+            })]
+          })]
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
+          className: "d-flex border-bottom border-left border-right",
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
+            className: "p-2 flex-fill",
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("h6", {
+              children: "Posts"
+            }), props.posts.filter(function (post) {
+              return post.username == props.auth.username;
+            }).length, /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("br", {})]
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
+            className: "p-2 flex-fill",
+            style: {
+              color: "purple"
+            },
+            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)(react_router_dom__WEBPACK_IMPORTED_MODULE_6__.Link, {
+              to: "/fans",
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("h6", {
+                children: "Fans"
+              }), props.follows.filter(function (follow) {
+                return follow.followed == props.auth.username;
+              }).length - 1, /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("br", {})]
+            })
+          })]
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("br", {}), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
+          className: "border",
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
+            className: "p-2 border-bottom",
+            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("h2", {
+              children: "Leaders to follow"
+            })
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
+            className: "media p-2 border-bottom",
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
+              className: "media-left",
+              children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_6__.Link, {
+                to: "/profile/",
+                children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_components_Img__WEBPACK_IMPORTED_MODULE_2__["default"], {
+                  src: "/storage/",
+                  width: "30px",
+                  height: "30px",
+                  alt: "musician"
+                })
+              })
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
+              className: "media-body",
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)(react_router_dom__WEBPACK_IMPORTED_MODULE_6__.Link, {
+                to: "/profile/",
+                className: "text-dark",
+                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("b", {}), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("small", {
+                  children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("i", {})
+                })]
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("button", {
+                className: 'btn btn-light float-right rounded-0',
+                onClick: function onClick() {
+                  return onFollow();
+                },
+                children: ["Followed", /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("svg", {
+                  className: "bi bi-check",
+                  width: "1.5em",
+                  height: "1.5em",
+                  viewBox: "0 0 16 16",
+                  fill: "currentColor",
+                  xmlns: "http://www.w3.org/2000/svg",
+                  children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("path", {
+                    fillRule: "evenodd",
+                    d: "M10.97 4.97a.75.75 0 0 1 1.071 1.05l-3.992 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.236.236 0 0 1 .02-.022z"
+                  })
+                })]
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_components_Button__WEBPACK_IMPORTED_MODULE_3__["default"], {
+                btnClass: 'mysonar-btn float-right',
+                onClick: function onClick() {
+                  return onFollow();
+                },
+                btnText: 'follow'
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_components_Button__WEBPACK_IMPORTED_MODULE_3__["default"], {
+                btnClass: 'mysonar-btn float-right',
+                onClick: function onClick() {
+                  return props.setErrors(["You must have bought atleast one song by "]);
+                },
+                btnText: 'follow'
+              })]
+            })]
+          })]
+        })]
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
+        className: "col-sm-4",
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
+          className: "p-2 border",
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("h5", {
+            children: "Songs for you"
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
+            className: "hidden-scroll"
+          })]
+        }), props.posts.reverse().map(function (post, index) {
+          return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
+            className: "media p-2 border-bottom",
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
+              className: "media-left",
+              children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
+                className: "avatar-thumbnail-xs",
+                style: {
+                  borderRadius: "50%"
+                },
+                children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_6__.Link, {
+                  to: "/profile/".concat(post.username),
+                  children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_components_Img__WEBPACK_IMPORTED_MODULE_2__["default"], {
+                    src: "/storage/".concat(props.users.find(function (user) {
+                      return user.username == post.username;
+                    }) && props.users.find(function (user) {
+                      return user.username == post.username;
+                    }).pp),
+                    width: "40px",
+                    height: "40px",
+                    alt: 'avatar'
+                  })
+                })
+              })
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
+              className: "media-body",
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("h6", {
+                className: "media-heading m-0",
+                style: {
+                  width: "100%",
+                  whiteSpace: "nowrap",
+                  overflow: "hidden",
+                  textOverflow: "clip"
+                },
+                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("b", {
+                  children: props.users.find(function (user) {
+                    return user.username == post.username;
+                  }) && props.users.find(function (user) {
+                    return user.username == post.username;
+                  }).name
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("small", {
+                  children: [post.username, " "]
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("small", {
+                  children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("i", {
+                    className: "float-right mr-1",
+                    children: post.created_at
+                  })
+                })]
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("p", {
+                className: "mb-0",
+                children: post.text
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
+                className: "mb-1",
+                style: {
+                  borderTopLeftRadius: "10px",
+                  borderTopRightRadius: "10px",
+                  borderBottomRightRadius: "10px",
+                  borderBottomLeftRadius: "10px",
+                  overflow: "hidden"
+                },
+                children: post.media && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_components_Img__WEBPACK_IMPORTED_MODULE_2__["default"], {
+                  src: "/storage/".concat(post.media),
+                  alt: 'post-media',
+                  width: "100%",
+                  height: "auto"
+                })
+              }), post.parameter_1 ? (new Date().getTime() - new Date(post.created_at).getTime()) / 86400000 < 1 ? props.polls.some(function (poll) {
+                return poll.username == props.auth.username && poll.post_id == post.id && poll.parameter == post.parameter_1;
+              }) ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_components_Button__WEBPACK_IMPORTED_MODULE_3__["default"], {
+                btnClass: "mysonar-btn btn-2 mb-1",
+                btnText: post.parameter_1,
+                btnStyle: {
+                  width: "100%"
+                },
+                onClick: function onClick() {
+                  return onPoll(post.id, post.parameter_1);
+                }
+              }) : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_components_Button__WEBPACK_IMPORTED_MODULE_3__["default"], {
+                btnClass: "mysonar-btn mb-1",
+                btnText: post.parameter_1,
+                btnStyle: {
+                  width: "100%"
+                },
+                onClick: function onClick() {
+                  return onPoll(post.id, post.parameter_1);
+                }
+              }) : props.polls.some(function (poll) {
+                // Get percentage votes for poll
+                percentage = props.polls.filter(function (poll) {
+                  return poll.post_id == post.id && poll.parameter == post.parameter_1;
+                }).length * 100 / props.polls.filter(function (poll) {
+                  return poll.post_id == post.id;
+                }).length;
+                return poll.username == props.auth.username && poll.post_id == post.id && poll.parameter == post.parameter_1;
+              }) ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
+                className: "progress rounded-0 mb-1",
+                style: {
+                  height: '33px'
+                },
+                children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
+                  className: "progress-bar",
+                  style: {
+                    width: "".concat(percentage, "%"),
+                    backgroundColor: "#232323"
+                  },
+                  children: post.parameter_1
+                })
+              }) : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
+                className: "progress rounded-0 mb-1",
+                style: {
+                  height: '33px'
+                },
+                children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
+                  className: "progress-bar",
+                  style: {
+                    width: "".concat(percentage, "%"),
+                    backgroundColor: "grey"
+                  },
+                  children: post.parameter_1
+                })
+              }) : "", post.parameter_2 ? (new Date().getTime() - new Date(post.created_at).getTime()) / 86400000 < 1 ? props.polls.some(function (poll) {
+                return poll.username == props.auth.username && poll.post_id == post.id && poll.parameter == post.parameter_2;
+              }) ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_components_Button__WEBPACK_IMPORTED_MODULE_3__["default"], {
+                btnClass: "mysonar-btn btn-2 mb-1",
+                btnText: post.parameter_2,
+                btnStyle: {
+                  width: "100%"
+                },
+                onClick: function onClick() {
+                  return onPoll(post.id, post.parameter_2);
+                }
+              }) : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_components_Button__WEBPACK_IMPORTED_MODULE_3__["default"], {
+                btnClass: "mysonar-btn mb-1",
+                btnText: post.parameter_2,
+                btnStyle: {
+                  width: "100%"
+                },
+                onClick: function onClick() {
+                  return onPoll(post.id, post.parameter_2);
+                }
+              }) : props.polls.some(function (poll) {
+                // Get percentage votes for poll
+                percentage = props.polls.filter(function (poll) {
+                  return poll.post_id == post.id && poll.parameter == post.parameter_2;
+                }).length * 100 / props.polls.filter(function (poll) {
+                  return poll.post_id == post.id;
+                }).length;
+                return poll.username == props.auth.username && poll.post_id == post.id && poll.parameter == post.parameter_2;
+              }) ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
+                className: "progress rounded-0 mb-1",
+                style: {
+                  height: '33px'
+                },
+                children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
+                  className: "progress-bar",
+                  style: {
+                    width: "".concat(percentage, "%"),
+                    backgroundColor: "#232323"
+                  },
+                  children: post.parameter_2
+                })
+              }) : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
+                className: "progress rounded-0 mb-1",
+                style: {
+                  height: '33px'
+                },
+                children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
+                  className: "progress-bar",
+                  style: {
+                    width: "".concat(percentage, "%"),
+                    backgroundColor: "grey"
+                  },
+                  children: post.parameter_2
+                })
+              }) : "", post.parameter_3 ? (new Date().getTime() - new Date(post.created_at).getTime()) / 86400000 < 1 ? props.polls.some(function (poll) {
+                return poll.username == props.auth.username && poll.post_id == post.id && poll.parameter == post.parameter_3;
+              }) ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_components_Button__WEBPACK_IMPORTED_MODULE_3__["default"], {
+                btnClass: "mysonar-btn btn-2 mb-1",
+                btnText: post.parameter_3,
+                btnStyle: {
+                  width: "100%"
+                },
+                onClick: function onClick() {
+                  return onPoll(post.id, post.parameter_3);
+                }
+              }) : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_components_Button__WEBPACK_IMPORTED_MODULE_3__["default"], {
+                btnClass: "mysonar-btn mb-1",
+                btnText: post.parameter_3,
+                btnStyle: {
+                  width: "100%"
+                },
+                onClick: function onClick() {
+                  return onPoll(post.id, post.parameter_3);
+                }
+              }) : props.polls.some(function (poll) {
+                // Get percentage votes for poll
+                percentage = props.polls.filter(function (poll) {
+                  return poll.post_id == post.id && poll.parameter == post.parameter_3;
+                }).length * 100 / props.polls.filter(function (poll) {
+                  return poll.post_id == post.id;
+                }).length;
+                return poll.username == props.auth.username && poll.post_id == post.id && poll.parameter == post.parameter_3;
+              }) ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
+                className: "progress rounded-0 mb-1",
+                style: {
+                  height: '33px'
+                },
+                children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
+                  className: "progress-bar",
+                  style: {
+                    width: "".concat(percentage, "%"),
+                    backgroundColor: "#232323"
+                  },
+                  children: post.parameter_3
+                })
+              }) : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
+                className: "progress rounded-0 mb-1",
+                style: {
+                  height: '33px'
+                },
+                children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
+                  className: "progress-bar",
+                  style: {
+                    width: "".concat(percentage, "%"),
+                    backgroundColor: "grey"
+                  },
+                  children: post.parameter_3
+                })
+              }) : "", post.parameter_4 ? (new Date().getTime() - new Date(post.created_at).getTime()) / 86400000 < 1 ? props.polls.some(function (poll) {
+                return poll.username == props.auth.username && poll.post_id == post.id && poll.parameter == post.parameter_4;
+              }) ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_components_Button__WEBPACK_IMPORTED_MODULE_3__["default"], {
+                btnClass: "mysonar-btn btn-2 mb-1",
+                btnText: post.parameter_4,
+                btnStyle: {
+                  width: "100%"
+                },
+                onClick: function onClick() {
+                  return onPoll(post.id, post.parameter_4);
+                }
+              }) : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_components_Button__WEBPACK_IMPORTED_MODULE_3__["default"], {
+                btnClass: "mysonar-btn mb-1",
+                btnText: post.parameter_4,
+                btnStyle: {
+                  width: "100%"
+                },
+                onClick: function onClick() {
+                  return onPoll(post.id, post.parameter_4);
+                }
+              }) : props.polls.some(function (poll) {
+                // Get percentage votes for poll
+                percentage = props.polls.filter(function (poll) {
+                  return poll.post_id == post.id && poll.parameter == post.parameter_4;
+                }).length * 100 / props.polls.filter(function (poll) {
+                  return poll.post_id == post.id;
+                }).length;
+                return poll.username == props.auth.username && poll.post_id == post.id && poll.parameter == post.parameter_4;
+              }) ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
+                className: "progress rounded-0 mb-1",
+                style: {
+                  height: '33px'
+                },
+                children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
+                  className: "progress-bar",
+                  style: {
+                    width: "".concat(percentage, "%"),
+                    backgroundColor: "#232323"
+                  },
+                  children: post.parameter_4
+                })
+              }) : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
+                className: "progress rounded-0 mb-1",
+                style: {
+                  height: '33px'
+                },
+                children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
+                  className: "progress-bar",
+                  style: {
+                    width: "".concat(percentage, "%"),
+                    backgroundColor: "grey"
+                  },
+                  children: post.parameter_4
+                })
+              }) : "", post.parameter_5 ? (new Date().getTime() - new Date(post.created_at).getTime()) / 86400000 < 1 ? props.polls.some(function (poll) {
+                return poll.username == props.auth.username && poll.post_id == post.id && poll.parameter == post.parameter_5;
+              }) ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_components_Button__WEBPACK_IMPORTED_MODULE_3__["default"], {
+                btnClass: "mysonar-btn btn-2 mb-1",
+                btnText: post.parameter_5,
+                btnStyle: {
+                  width: "100%"
+                },
+                onClick: function onClick() {
+                  return onPoll(post.id, post.parameter_5);
+                }
+              }) : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_components_Button__WEBPACK_IMPORTED_MODULE_3__["default"], {
+                btnClass: "mysonar-btn mb-1",
+                btnText: post.parameter_5,
+                btnStyle: {
+                  width: "100%"
+                },
+                onClick: function onClick() {
+                  return onPoll(post.id, post.parameter_5);
+                }
+              }) : props.polls.some(function (poll) {
+                // Get percentage votes for poll
+                percentage = props.polls.filter(function (poll) {
+                  return poll.post_id == post.id && poll.parameter == post.parameter_5;
+                }).length * 100 / props.polls.filter(function (poll) {
+                  return poll.post_id == post.id;
+                }).length;
+                return poll.username == props.auth.username && poll.post_id == post.id && poll.parameter == post.parameter_5;
+              }) ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
+                className: "progress rounded-0 mb-1",
+                style: {
+                  height: '33px'
+                },
+                children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
+                  className: "progress-bar",
+                  style: {
+                    width: "".concat(percentage, "%"),
+                    backgroundColor: "#232323"
+                  },
+                  children: post.parameter_5
+                })
+              }) : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
+                className: "progress rounded-0 mb-1",
+                style: {
+                  height: '33px'
+                },
+                children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
+                  className: "progress-bar",
+                  style: {
+                    width: "".concat(percentage, "%"),
+                    backgroundColor: "grey"
+                  },
+                  children: post.parameter_5
+                })
+              }) : "", post.parameter_1 && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("small", {
+                style: {
+                  color: "grey"
+                },
+                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("i", {
+                  children: ["Total votes:", post.parameter_1 && props.polls.filter(function (poll) {
+                    return poll.post_id == post.id;
+                  }).length]
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("br", {})]
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("a", {
+                href: "#",
+                style: {
+                  color: "#cc3300"
+                },
+                onClick: function onClick(e) {
+                  e.preventDefault();
+                  onPostLike(post.id);
+                },
+                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("svg", {
+                  xmlns: "http://www.w3.org/2000/svg",
+                  width: "1.2em",
+                  height: "1.2em",
+                  fill: "currentColor",
+                  className: "bi bi-heart-fill",
+                  viewBox: "0 0 16 16",
+                  children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("path", {
+                    fillRule: "evenodd",
+                    d: "M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z"
+                  })
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("small", {
+                  children: " "
+                })]
+              }), " :", /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("a", {
+                href: "#",
+                onClick: function onClick(e) {
+                  e.preventDefault();
+                  onPostLike(post.id);
+                },
+                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("svg", {
+                  xmlns: "http://www.w3.org/2000/svg",
+                  width: "1.2em",
+                  height: "1.2em",
+                  fill: "currentColor",
+                  className: "bi bi-heart",
+                  viewBox: "0 0 16 16",
+                  children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("path", {
+                    d: "m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01L8 2.748zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143c.06.055.119.112.176.171a3.12 3.12 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15z"
+                  })
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("small", {})]
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)(react_router_dom__WEBPACK_IMPORTED_MODULE_6__.Link, {
+                to: "post-show/" + post.id,
+                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("svg", {
+                  className: "bi bi-chat ml-5",
+                  width: "1.2em",
+                  height: "1.2em",
+                  viewBox: "0 0 16 16",
+                  fill: "currentColor",
+                  xmlns: "http://www.w3.org/2000/svg",
+                  children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("path", {
+                    fillRule: "evenodd",
+                    d: "M2.678 11.894a1 1 0 0 1 .287.801 10.97 10.97 0 0 1-.398 2c1.395-.323 2.247-.697 2.634-.893a1 1 0 0 1 .71-.074A8.06 8.06 0 0 0 8 14c3.996 0 7-2.807 7-6 0-3.192-3.004-6-7-6S1 4.808 1 8c0 1.468.617 2.83 1.678 3.894zm-.493 3.905a21.682 21.682 0 0 1-.713.129c-.2.032-.352-.176-.273-.362a9.68 9.68 0 0 0 .244-.637l.003-.01c.248-.72.45-1.548.524-2.319C.743 11.37 0 9.76 0 8c0-3.866 3.582-7 8-7s8 3.134 8 7-3.582 7-8 7a9.06 9.06 0 0 1-2.347-.306c-.52.263-1.639.742-3.468 1.105z"
+                  })
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("small", {})]
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
+                className: "dropup float-right",
+                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("a", {
+                  href: "#",
+                  role: "button",
+                  id: "dropdownMenuLink",
+                  "data-toggle": "dropdown",
+                  "aria-haspopup": "true",
+                  "aria-expanded": "false",
+                  children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("svg", {
+                    className: "bi bi-three-dots-vertical",
+                    width: "1em",
+                    height: "1em",
+                    viewBox: "0 0 16 16",
+                    fill: "currentColor",
+                    xmlns: "http://www.w3.org/2000/svg",
+                    children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("path", {
+                      fillRule: "evenodd",
+                      d: "M9.5 13a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z"
+                    })
+                  })
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
+                  className: "dropdown-menu dropdown-menu-right p-0",
+                  style: {
+                    borderRadius: "0"
+                  },
+                  children: post.username !== props.auth.username ? post.username !== "@blackmusic" && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("a", {
+                    href: "#",
+                    className: "dropdown-item",
+                    onClick: function onClick(e) {
+                      e.preventDefault();
+                      onFollow(post.username);
+                    },
+                    children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("h6", {
+                      children: "Unfollow"
+                    })
+                  }) : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("a", {
+                    href: "#",
+                    className: "dropdown-item",
+                    onClick: function onClick(e) {
+                      e.preventDefault();
+                      onDeletePost(post.id);
+                    },
+                    children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("h6", {
+                      children: "Delete post"
+                    })
+                  })
+                })]
+              })]
+            })]
+          }, index);
+        })]
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
+        className: "col-sm-3"
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
+        className: "col-sm-1"
+      })]
+    })]
+  });
+};
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Index);
 
 /***/ }),
 
