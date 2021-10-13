@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Follows;
 use App\Polls;
 use App\PostCommentLikes;
 use App\PostComments;
@@ -20,29 +21,40 @@ class PostsController extends Controller
      */
     public function index()
     {
-        // return Posts::all();
+        $getUsers = User::where('id', '!=', auth()->user()->id)
+            ->where('account_type', 'leader')
+            ->get();
 
-        $posts = Posts::all();
-
-        $users = User::all();
+        $getPosts = Posts::all();
 
         // Get leaders
-        foreach ($users as $key => $user) {
+        foreach ($getUsers as $key => $user) {
+            // Check if user has followed leader
+            $hasFollowed = Follows::where('followed', $user->id)
+                ->where('user_id', auth()->user()->id)
+                ->exists();
+
             // Get leaders only
-            if ($user->account_type == "leader") {
-                $users[$key] = array(
-                    "id" => $user->id,
-                    "name" => $user->name,
-                    "account_type" => $user->account_type,
-                    "pp" => $user->pp,
-				);
-            }
+            $leaders[$key] = array(
+                "id" => $user->id,
+                "name" => $user->name,
+                "account_type" => $user->account_type,
+                "pp" => $user->pp,
+                "hasFollowed" => $hasFollowed,
+            );
         }
 
         // Get Posts
-        foreach ($posts as $key => $post) {
+        foreach ($getPosts as $key => $post) {
+
+            // Check if user has liked post
+            $hasLiked = PostLikes::where('id', $post->id)
+                ->where('user_id', auth()->user()->id)
+                ->exists();
+
             $posts[$key] = array(
                 "id" => $post->id,
+                "user" => $post->user->name,
                 "text" => $post->text,
                 "media" => $post->media,
                 "parameter_1" => $post->parameter_1,
@@ -50,10 +62,13 @@ class PostsController extends Controller
                 "parameter_3" => $post->parameter_3,
                 "parameter_4" => $post->parameter_4,
                 "parameter_5" => $post->parameter_5,
+                "hasLiked" => $hasLiked,
+				"postLikes" => $post->postLikes,
+                "created_at" => $post->created_at->format("d F Y"),
             );
         }
 
-        return [$users, $posts];
+        return ["leaders" => $leaders, "posts" => $posts];
     }
 
     /**

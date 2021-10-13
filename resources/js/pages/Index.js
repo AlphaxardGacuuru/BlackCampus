@@ -16,19 +16,20 @@ const Index = (props) => {
 		// Get Users
 		axios.get(`${props.url}/api/posts`)
 			.then((res) => {
-				setLeaders(res.data[0])
-				setPosts(res.data[1])
+				console.log(res.data)
+				setLeaders(res.data.leaders)
+				setPosts(res.data.posts)
 			}).catch((err) => props.setErrors([err.data]))
 	}, [])
 
 	// Function for following musicians
-	const onFollow = (musician) => {
+	const onFollow = (id) => {
 		axios.get('/sanctum/csrf-cookie').then(() => {
 			axios.post(`${props.url}/api/follows`, {
-				musician: musician
+				id: id
 			}).then((res) => {
 				props.setMessage(res.data)
-				axios.get(`${props.url}/api/follows`).then((res) => props.setFollows(res.data))
+				axios.get(`${props.url}/api/posts`).then((res) => setLeaders(res.data.leaders))
 			}).catch((err) => {
 				const resErrors = err.response.data.errors
 				var resError
@@ -130,7 +131,7 @@ const Index = (props) => {
 						<div className="p-2">
 							<div className="avatar-thumbnail-sm" style={{ borderRadius: "50%" }}>
 								<Link to={"/profile/" + props.auth.id}>
-									<Img src={'/storage/' + props.auth.pp}
+									<Img src={props.auth.pp}
 										width="100px"
 										height="100px"
 										alt="avatar" />
@@ -184,29 +185,30 @@ const Index = (props) => {
 							<div key={key} className='media p-2 border-bottom'>
 								<div className='media-left'>
 									<Link to={`/profile/:${leader.id}`}>
-										<Img src={`/storage/${leader.pp}`} width="30px" height="30px" alt="musician" />
+										<Img src={leader.pp} width="30px" height="30px" alt="musician" />
 									</Link>
 								</div>
 								<div className='media-body'>
-									<Link to={`/profile/`} className="text-dark">
-										<b></b>
-										<small><i></i></small>
+									<Link to={`/profile/${leader.id}`} className="text-dark">
+										<b>{leader.name}</b>
 									</Link>
-									<button className={'btn btn-light float-right rounded-0'}
-										onClick={() => onFollow()}>
-										Followed
-										<svg className='bi bi-check' width='1.5em' height='1.5em' viewBox='0 0 16 16' fill='currentColor' xmlns='http://www.w3.org/2000/svg'>
-											<path fillRule='evenodd'
-												d='M10.97 4.97a.75.75 0 0 1 1.071 1.05l-3.992 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.236.236 0 0 1 .02-.022z' />
-										</svg>
-									</button>
-									<Button btnClass={'btn float-right'}
-										onClick={() => onFollow()}
-										btnText={'follow'} />
-									<Button
-										onClick={() =>
-											props.setErrors([`You must have bought atleast one song by `])}
-										btnText={'follow'} />
+									{leader.hasFollowed ?
+										<button className={'btn btn-sm btn-light float-right rounded-0'}
+											onClick={() => onFollow(leader.id)}>
+											Followed
+											<svg className='bi bi-check'
+												width='1.5em'
+												height='1.5em'
+												viewBox='0 0 16 16'
+												fill='currentColor'
+												xmlns='http://www.w3.org/2000/svg'>
+												<path fillRule='evenodd'
+													d='M10.97 4.97a.75.75 0 0 1 1.071 1.05l-3.992 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.236.236 0 0 1 .02-.022z' />
+											</svg>
+										</button> :
+										<Button btnClass={'btn btn-sm btn-success rounded-0 float-right'}
+											onClick={() => onFollow(leader.id)}
+											btnText={'follow'} />}
 								</div>
 							</div>
 						))}
@@ -217,16 +219,14 @@ const Index = (props) => {
 				<div className="col-sm-4">
 					{/* <!-- ****** Stories Area ****** --> */}
 					<div className="p-2 border">
-						<h5>Songs for you</h5>
+						<h5>Stories for you</h5>
 						<div className="hidden-scroll">
 						</div>
 					</div>
 					{/* <!-- ****** Stories Area End ****** --> */}
 
 					{/* <!-- Posts area --> */}
-					{posts
-						.reverse()
-						.map((post, index) => (
+					{posts.map((post, index) => (
 							<div key={index} className='media p-2 border-bottom'>
 								<div className='media-left'>
 									<div className="avatar-thumbnail-xs" style={{ borderRadius: "50%" }}>
@@ -246,8 +246,7 @@ const Index = (props) => {
 											overflow: "hidden",
 											textOverflow: "clip"
 										}}>
-										<b>{post.name}</b>
-										<small>{post.id}</small>
+										<b>{post.user}</b>
 										<small>
 											<i className="float-right mr-1">{post.created_at}</i>
 										</small>

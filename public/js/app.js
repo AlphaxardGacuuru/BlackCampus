@@ -2456,7 +2456,7 @@ var Button = function Button(_ref) {
 };
 
 Button.defaultProps = {
-  btnClass: 'btn btn-primary rounded-0'
+  btnClass: 'btn btn-sm btn-primary rounded-0'
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Button);
 
@@ -3162,21 +3162,22 @@ var Index = function Index(props) {
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
     // Get Users
     axios__WEBPACK_IMPORTED_MODULE_1___default().get("".concat(props.url, "/api/posts")).then(function (res) {
-      setLeaders(res.data[0]);
-      setPosts(res.data[1]);
+      console.log(res.data);
+      setLeaders(res.data.leaders);
+      setPosts(res.data.posts);
     })["catch"](function (err) {
       return props.setErrors([err.data]);
     });
   }, []); // Function for following musicians
 
-  var onFollow = function onFollow(musician) {
+  var onFollow = function onFollow(id) {
     axios__WEBPACK_IMPORTED_MODULE_1___default().get('/sanctum/csrf-cookie').then(function () {
       axios__WEBPACK_IMPORTED_MODULE_1___default().post("".concat(props.url, "/api/follows"), {
-        musician: musician
+        id: id
       }).then(function (res) {
         props.setMessage(res.data);
-        axios__WEBPACK_IMPORTED_MODULE_1___default().get("".concat(props.url, "/api/follows")).then(function (res) {
-          return props.setFollows(res.data);
+        axios__WEBPACK_IMPORTED_MODULE_1___default().get("".concat(props.url, "/api/posts")).then(function (res) {
+          return setLeaders(res.data.leaders);
         });
       })["catch"](function (err) {
         var resErrors = err.response.data.errors;
@@ -3305,7 +3306,7 @@ var Index = function Index(props) {
               children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_6__.Link, {
                 to: "/profile/" + props.auth.id,
                 children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_components_Img__WEBPACK_IMPORTED_MODULE_2__["default"], {
-                  src: '/storage/' + props.auth.pp,
+                  src: props.auth.pp,
                   width: "100px",
                   height: "100px",
                   alt: "avatar"
@@ -3370,7 +3371,7 @@ var Index = function Index(props) {
                 children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_6__.Link, {
                   to: "/profile/:".concat(leader.id),
                   children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_components_Img__WEBPACK_IMPORTED_MODULE_2__["default"], {
-                    src: "/storage/".concat(leader.pp),
+                    src: leader.pp,
                     width: "30px",
                     height: "30px",
                     alt: "musician"
@@ -3378,16 +3379,16 @@ var Index = function Index(props) {
                 })
               }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
                 className: "media-body",
-                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)(react_router_dom__WEBPACK_IMPORTED_MODULE_6__.Link, {
-                  to: "/profile/",
+                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_6__.Link, {
+                  to: "/profile/".concat(leader.id),
                   className: "text-dark",
-                  children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("b", {}), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("small", {
-                    children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("i", {})
-                  })]
-                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("button", {
-                  className: 'btn btn-light float-right rounded-0',
+                  children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("b", {
+                    children: leader.name
+                  })
+                }), leader.hasFollowed ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("button", {
+                  className: 'btn btn-sm btn-light float-right rounded-0',
                   onClick: function onClick() {
-                    return onFollow();
+                    return onFollow(leader.id);
                   },
                   children: ["Followed", /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("svg", {
                     className: "bi bi-check",
@@ -3401,15 +3402,10 @@ var Index = function Index(props) {
                       d: "M10.97 4.97a.75.75 0 0 1 1.071 1.05l-3.992 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.236.236 0 0 1 .02-.022z"
                     })
                   })]
-                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_components_Button__WEBPACK_IMPORTED_MODULE_3__["default"], {
-                  btnClass: 'btn float-right',
+                }) : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_components_Button__WEBPACK_IMPORTED_MODULE_3__["default"], {
+                  btnClass: 'btn btn-sm btn-success rounded-0 float-right',
                   onClick: function onClick() {
-                    return onFollow();
-                  },
-                  btnText: 'follow'
-                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_components_Button__WEBPACK_IMPORTED_MODULE_3__["default"], {
-                  onClick: function onClick() {
-                    return props.setErrors(["You must have bought atleast one song by "]);
+                    return onFollow(leader.id);
                   },
                   btnText: 'follow'
                 })]
@@ -3422,11 +3418,11 @@ var Index = function Index(props) {
         children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
           className: "p-2 border",
           children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("h5", {
-            children: "Songs for you"
+            children: "Stories for you"
           }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
             className: "hidden-scroll"
           })]
-        }), posts.reverse().map(function (post, index) {
+        }), posts.map(function (post, index) {
           return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
             className: "media p-2 border-bottom",
             children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
@@ -3457,9 +3453,7 @@ var Index = function Index(props) {
                   textOverflow: "clip"
                 },
                 children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("b", {
-                  children: post.name
-                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("small", {
-                  children: post.id
+                  children: post.user
                 }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("small", {
                   children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("i", {
                     className: "float-right mr-1",

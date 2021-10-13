@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Follows;
+use App\User;
+use App\FollowNotifications;
 use Illuminate\Http\Request;
 
 class FollowsController extends Controller
@@ -35,7 +37,30 @@ class FollowsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        /* Add follow */
+        $followQuery = Follows::where('followed', $request->id)->where('user_id', auth()->user()->id)->count();
+
+        if ($followQuery > 0) {
+            Follows::where('followed', $request->id)->where('user_id', auth()->user()->id)->delete();
+            $message = "Unfollowed";
+        } else {
+            $post = new Follows;
+            $post->followed = $request->input('id');
+            $post->user_id = auth()->user()->id;
+            $post->muted = "false";
+            $post->blocked = "false";
+            $post->save();
+            $message = "Followed";
+
+            $notification = new FollowNotifications;
+            $notification->user_id = $request->input('id');
+            $notification->follower = auth()->user()->id;
+            $notification->save();
+        }
+
+		$name = User::find($request->input('id'))->name;
+
+        return response('You ' . $message . ' ' . $name, 200);
     }
 
     /**
