@@ -7,18 +7,20 @@ import Messages from './Messages'
 import BottomNav from './BottomNav'
 
 import Index from '../pages/Index';
+import LoginPopUp from './LoginPopUp';
 
 // import LoginPopUp from '../auth/LoginPopUp';
 
 function App() {
 	// Declare states
+	const [login, setLogin] = useState()
 	const [url, setUrl] = useState(window.location.href.match(/https/) ?
 		'https://campus.black.co.ke' :
 		'http://localhost:8001')
 	const [auth, setAuth] = useState({
+		"id": "1",
 		"name": "Guest",
-		"username": "@guest",
-		"pp": "profile-pics/male_avatar.png",
+		"pp": "storage/profile-pics/male_avatar.png",
 		"account_type": "normal"
 	})
 	const [message, setMessage] = useState('')
@@ -37,7 +39,7 @@ function App() {
 	useEffect(() => {
 		// Fetch Auth
 		axios.get(`${url}/api/home`)
-			// .then((res) => setAuth(res.data))
+			.then((res) => setAuth(res.data))
 			.catch(() => setErrors(['Failed to fetch auth']))
 
 		// Fetch Follows Notifications
@@ -49,17 +51,14 @@ function App() {
 		axios.get(`${url}/api/notifications`)
 			.then((res) => setNotifications(res.data))
 			.catch(() => setErrors(['Failed to fetch notifications']))
-
-		//Fetch Users
-		axios.get(`${url}/api/users`)
-			.then((res) => setUsers(res.data))
-			.catch(() => setErrors(['Failed to fetch users']))
-
 	}, [])
 
 	return (
 		<Router>
-			<TopNav {...{ url, auth, setMessage, setErrors, setAuth, notifications, followNotifications }} />
+			{/* Login Pop Up */}
+			{login && <LoginPopUp {...{ url, auth, setAuth, setLogin, setMessage, setErrors }} />}
+
+			<TopNav {...{ url, auth, login, setLogin, setMessage, setErrors, setAuth, notifications, followNotifications }} />
 
 			<Route path="/" exact render={() => (
 				<Index {...{ url, auth, setMessage, setErrors }} />

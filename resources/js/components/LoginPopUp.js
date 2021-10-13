@@ -6,7 +6,7 @@ import Button from './Button'
 
 const LoginPopUp = (props) => {
 
-	const [phone, setPhone] = useState('07')
+	const [email, setEmail] = useState()
 
 	const history = useHistory()
 
@@ -14,14 +14,16 @@ const LoginPopUp = (props) => {
 		e.preventDefault()
 
 		axios.get('/sanctum/csrf-cookie').then(() => {
-			axios.post(`${url}/api/login`, {
-				phone: phone,
-				password: phone,
+			axios.post(`${props.url}/api/login`, {
+				// name: "Al Gacuuru",
+				email: email,
+				password: email,
+				password_confirmation: email,
 				remember: 'checked'
 			}).then(res => {
-				// const resStatus = res.statusText
-				setMessage("Logged in")
-				axios.get(`${url}/api/home`).then((res) => setAuth(res.data))
+				props.setMessage("Logged in")
+				axios.get(`${props.url}/api/home`).then((res) => props.setAuth(res.data))
+				props.setLogin(false)
 				setTimeout(() => history.push('/'), 1000)
 			}).catch(err => {
 				const resErrors = err.response.data.errors
@@ -33,11 +35,9 @@ const LoginPopUp = (props) => {
 				}
 				// Get other errors
 				newError.push(err.response.data.message)
-				setErrors(newError)
+				props.setErrors(newError)
 			});
 		});
-
-		setPhone('07')
 	}
 
 	return (
@@ -49,21 +49,21 @@ const LoginPopUp = (props) => {
 						<a href="#">Login</a>
 					</div>
 				</div>
-				<div className="p-2">
-					<form onClick={onSubmit}>
-						<input
-							id="phone"
-							type="text"
-							className="form-control"
-							name="phone"
-							value={phone}
-							onChange={(e) => { setPhone(e.target.value) }}
-							required={true}
-							autoComplete="phone" />
-						<br />
+				<div className="p-2 mb-4">
+					<center>
+						<form onSubmit={onSubmit}>
+							<input
+								id="email"
+								type="email"
+								className="form-control rounded-0"
+								name="email"
+								placeholder="Email"
+								onChange={(e) => setEmail(e.target.value)} />
+								<br />
 
-						<Button type="submit" btnClass="mysonar-btn float-right" btnText={'Login'} />
-					</form>
+							<Button type="submit" btnClass="btn btn-success rounded-0" btnText={'Login'} />
+						</form>
+					</center>
 				</div>
 			</div>
 		</div>

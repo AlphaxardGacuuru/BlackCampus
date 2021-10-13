@@ -7,7 +7,7 @@ const Button = ({ btnStyle, btnClass, btnText, onClick }) => {
 }
 
 Button.defaultProps = {
-	btnClass: 'sonar-btn',
+	btnClass: 'btn btn-primary rounded-0',
 }
 
 export default Button

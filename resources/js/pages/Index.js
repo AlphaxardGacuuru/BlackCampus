@@ -9,12 +9,16 @@ const Index = (props) => {
 
 	const history = useHistory()
 
+	const [leaders, setLeaders] = useState([])
 	const [posts, setPosts] = useState([])
 
 	useEffect(() => {
+		// Get Users
 		axios.get(`${props.url}/api/posts`)
-		.then((res) => setPosts(res.data))
-		.catch((err) => setErrors([res.data]))
+			.then((res) => {
+				setLeaders(res.data[0])
+				setPosts(res.data[1])
+			}).catch((err) => props.setErrors([err.data]))
 	}, [])
 
 	// Function for following musicians
@@ -125,9 +129,8 @@ const Index = (props) => {
 					<div className="d-flex border">
 						<div className="p-2">
 							<div className="avatar-thumbnail-sm" style={{ borderRadius: "50%" }}>
-								<Link to={"/profile/" + props.auth.username}>
-									<Img
-										src={'/storage/' + props.auth.pp}
+								<Link to={"/profile/" + props.auth.id}>
+									<Img src={'/storage/' + props.auth.pp}
 										width="100px"
 										height="100px"
 										alt="avatar" />
@@ -135,8 +138,7 @@ const Index = (props) => {
 							</div>
 						</div>
 						<div className="p-2 flex-grow-1">
-							<h5
-								className="m-0 p-0"
+							<h5 className="m-0 p-0"
 								style={{
 									width: "160px",
 									whiteSpace: "nowrap",
@@ -145,32 +147,26 @@ const Index = (props) => {
 								}}>
 								{props.auth.name}
 							</h5>
-							<h6
-								className="m-0 p-0"
+							<h6 className="m-0 p-0"
 								style={{
 									width: "140px",
 									whiteSpace: "nowrap",
 									overflow: "hidden",
 									textOverflow: "clip"
 								}}>
-								<small>{props.auth.username}</small>
+								<small>{props.auth.id}</small>
 							</h6>
 						</div>
 					</div>
 					<div className="d-flex border-bottom border-left border-right">
 						<div className="p-2 flex-fill">
 							<h6>Posts</h6>
-							{props.posts.filter((post) => {
-								return post.username == props.auth.username
-							}).length}
 							<br />
 						</div>
 						<div className="p-2 flex-fill" style={{ color: "purple" }}>
 							<Link to='/fans'>
 								<h6>Fans</h6>
-								{props.follows.filter((follow) => {
-									return follow.followed == props.auth.username
-								}).length - 1}
+
 								<br />
 							</Link>
 						</div>
@@ -184,34 +180,36 @@ const Index = (props) => {
 						<div className="p-2 border-bottom">
 							<h2>Leaders to follow</h2>
 						</div>
-						<div className='media p-2 border-bottom'>
-							<div className='media-left'>
-								<Link to={`/profile/`}>
-									<Img src={`/storage/`} width="30px" height="30px" alt="musician" />
-								</Link>
+						{leaders.map((leader, key) => (
+							<div key={key} className='media p-2 border-bottom'>
+								<div className='media-left'>
+									<Link to={`/profile/:${leader.id}`}>
+										<Img src={`/storage/${leader.pp}`} width="30px" height="30px" alt="musician" />
+									</Link>
+								</div>
+								<div className='media-body'>
+									<Link to={`/profile/`} className="text-dark">
+										<b></b>
+										<small><i></i></small>
+									</Link>
+									<button className={'btn btn-light float-right rounded-0'}
+										onClick={() => onFollow()}>
+										Followed
+										<svg className='bi bi-check' width='1.5em' height='1.5em' viewBox='0 0 16 16' fill='currentColor' xmlns='http://www.w3.org/2000/svg'>
+											<path fillRule='evenodd'
+												d='M10.97 4.97a.75.75 0 0 1 1.071 1.05l-3.992 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.236.236 0 0 1 .02-.022z' />
+										</svg>
+									</button>
+									<Button btnClass={'btn float-right'}
+										onClick={() => onFollow()}
+										btnText={'follow'} />
+									<Button
+										onClick={() =>
+											props.setErrors([`You must have bought atleast one song by `])}
+										btnText={'follow'} />
+								</div>
 							</div>
-							<div className='media-body'>
-								<Link to={`/profile/`} className="text-dark">
-									<b></b>
-									<small><i></i></small>
-								</Link>
-								<button className={'btn btn-light float-right rounded-0'}
-									onClick={() => onFollow()}>
-									Followed
-									<svg className='bi bi-check' width='1.5em' height='1.5em' viewBox='0 0 16 16' fill='currentColor' xmlns='http://www.w3.org/2000/svg'>
-										<path fillRule='evenodd'
-											d='M10.97 4.97a.75.75 0 0 1 1.071 1.05l-3.992 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.236.236 0 0 1 .02-.022z' />
-									</svg>
-								</button>
-								<Button btnClass={'mysonar-btn float-right'}
-									onClick={() => onFollow()}
-									btnText={'follow'} />
-								<Button btnClass={'mysonar-btn float-right'}
-									onClick={() =>
-										props.setErrors([`You must have bought atleast one song by `])}
-									btnText={'follow'} />
-							</div>
-						</div>
+						))}
 					</div>
 				</div>
 				{/* <!-- Leader suggestion area end --> */}
@@ -226,15 +224,14 @@ const Index = (props) => {
 					{/* <!-- ****** Stories Area End ****** --> */}
 
 					{/* <!-- Posts area --> */}
-					{props.posts
+					{posts
 						.reverse()
 						.map((post, index) => (
 							<div key={index} className='media p-2 border-bottom'>
 								<div className='media-left'>
 									<div className="avatar-thumbnail-xs" style={{ borderRadius: "50%" }}>
-										<Link to={`/profile/${post.username}`}>
-											<Img src={`/storage/${props.users.find((user) => user.username == post.username) &&
-												props.users.find((user) => user.username == post.username).pp}`}
+										<Link to={`/profile/${post.id}`}>
+											<Img src={`${props.auth.pp}`}
 												width="40px"
 												height="40px"
 												alt={'avatar'} />
@@ -249,9 +246,8 @@ const Index = (props) => {
 											overflow: "hidden",
 											textOverflow: "clip"
 										}}>
-										<b>{props.users.find((user) => user.username == post.username) &&
-											props.users.find((user) => user.username == post.username).name}</b>
-										<small>{post.username} </small>
+										<b>{post.name}</b>
+										<small>{post.id}</small>
 										<small>
 											<i className="float-right mr-1">{post.created_at}</i>
 										</small>
@@ -266,14 +262,14 @@ const Index = (props) => {
 										borderBottomLeftRadius: "10px",
 										overflow: "hidden"
 									}}>
-										{post.media && <Img src={`/storage/${post.media}`} alt={'post-media'} width="100%" height="auto" />}
+										{post.media && <Img src={post.media} alt={'post-media'} width="100%" height="auto" />}
 									</div>
 
 									{/* Show poll */}
-									{post.parameter_1 ?
+									{/* {post.parameter_1 ?
 										(((new Date().getTime() - new Date(post.created_at).getTime()) / 86400000) < 1) ?
-											props.polls.some((poll) => {
-												return poll.username == props.auth.username &&
+											polls.some((poll) => {
+												return poll.id == props.auth.id &&
 													poll.post_id == post.id &&
 													poll.parameter == post.parameter_1
 											}) ?
@@ -287,15 +283,15 @@ const Index = (props) => {
 													btnText={post.parameter_1}
 													btnStyle={{ width: "100%" }}
 													onClick={() => onPoll(post.id, post.parameter_1)} />
-											: props.polls.some((poll) => {
+											: polls.some((poll) => {
 												// Get percentage votes for poll
-												percentage = props.polls
+												percentage = polls
 													.filter((poll) => poll.post_id == post.id &&
 														poll.parameter == post.parameter_1)
 													.length * 100 /
-													props.polls.filter((poll) => poll.post_id == post.id).length
+													polls.filter((poll) => poll.post_id == post.id).length
 
-												return poll.username == props.auth.username &&
+												return poll.id == props.auth.id &&
 													poll.post_id == post.id &&
 													poll.parameter == post.parameter_1
 											}) ?
@@ -315,8 +311,8 @@ const Index = (props) => {
 
 									{post.parameter_2 ?
 										(((new Date().getTime() - new Date(post.created_at).getTime()) / 86400000) < 1) ?
-											props.polls.some((poll) => {
-												return poll.username == props.auth.username &&
+											polls.some((poll) => {
+												return poll.id == props.auth.id &&
 													poll.post_id == post.id &&
 													poll.parameter == post.parameter_2
 											}) ?
@@ -330,15 +326,15 @@ const Index = (props) => {
 													btnText={post.parameter_2}
 													btnStyle={{ width: "100%" }}
 													onClick={() => onPoll(post.id, post.parameter_2)} />
-											: props.polls.some((poll) => {
+											: polls.some((poll) => {
 												// Get percentage votes for poll
-												percentage = props.polls
+												percentage = polls
 													.filter((poll) => poll.post_id == post.id &&
 														poll.parameter == post.parameter_2)
 													.length * 100 /
-													props.polls.filter((poll) => poll.post_id == post.id).length
+													polls.filter((poll) => poll.post_id == post.id).length
 
-												return poll.username == props.auth.username &&
+												return poll.id == props.auth.id &&
 													poll.post_id == post.id &&
 													poll.parameter == post.parameter_2
 											}) ?
@@ -358,8 +354,8 @@ const Index = (props) => {
 
 									{post.parameter_3 ?
 										(((new Date().getTime() - new Date(post.created_at).getTime()) / 86400000) < 1) ?
-											props.polls.some((poll) => {
-												return poll.username == props.auth.username &&
+											polls.some((poll) => {
+												return poll.id == props.auth.id &&
 													poll.post_id == post.id &&
 													poll.parameter == post.parameter_3
 											}) ?
@@ -373,15 +369,15 @@ const Index = (props) => {
 													btnText={post.parameter_3}
 													btnStyle={{ width: "100%" }}
 													onClick={() => onPoll(post.id, post.parameter_3)} />
-											: props.polls.some((poll) => {
+											: polls.some((poll) => {
 												// Get percentage votes for poll
-												percentage = props.polls
+												percentage = polls
 													.filter((poll) => poll.post_id == post.id &&
 														poll.parameter == post.parameter_3)
 													.length * 100 /
-													props.polls.filter((poll) => poll.post_id == post.id).length
+													polls.filter((poll) => poll.post_id == post.id).length
 
-												return poll.username == props.auth.username &&
+												return poll.id == props.auth.id &&
 													poll.post_id == post.id &&
 													poll.parameter == post.parameter_3
 											}) ?
@@ -401,8 +397,8 @@ const Index = (props) => {
 
 									{post.parameter_4 ?
 										(((new Date().getTime() - new Date(post.created_at).getTime()) / 86400000) < 1) ?
-											props.polls.some((poll) => {
-												return poll.username == props.auth.username &&
+											polls.some((poll) => {
+												return poll.id == props.auth.id &&
 													poll.post_id == post.id &&
 													poll.parameter == post.parameter_4
 											}) ?
@@ -416,15 +412,15 @@ const Index = (props) => {
 													btnText={post.parameter_4}
 													btnStyle={{ width: "100%" }}
 													onClick={() => onPoll(post.id, post.parameter_4)} />
-											: props.polls.some((poll) => {
+											: polls.some((poll) => {
 												// Get percentage votes for poll
-												percentage = props.polls
+												percentage = polls
 													.filter((poll) => poll.post_id == post.id &&
 														poll.parameter == post.parameter_4)
 													.length * 100 /
-													props.polls.filter((poll) => poll.post_id == post.id).length
+													polls.filter((poll) => poll.post_id == post.id).length
 
-												return poll.username == props.auth.username &&
+												return poll.id == props.auth.id &&
 													poll.post_id == post.id &&
 													poll.parameter == post.parameter_4
 											}) ?
@@ -444,8 +440,8 @@ const Index = (props) => {
 
 									{post.parameter_5 ?
 										(((new Date().getTime() - new Date(post.created_at).getTime()) / 86400000) < 1) ?
-											props.polls.some((poll) => {
-												return poll.username == props.auth.username &&
+											polls.some((poll) => {
+												return poll.id == props.auth.id &&
 													poll.post_id == post.id &&
 													poll.parameter == post.parameter_5
 											}) ?
@@ -459,15 +455,15 @@ const Index = (props) => {
 													btnText={post.parameter_5}
 													btnStyle={{ width: "100%" }}
 													onClick={() => onPoll(post.id, post.parameter_5)} />
-											: props.polls.some((poll) => {
+											: polls.some((poll) => {
 												// Get percentage votes for poll
-												percentage = props.polls
+												percentage = polls
 													.filter((poll) => poll.post_id == post.id &&
 														poll.parameter == post.parameter_5)
 													.length * 100 /
-													props.polls.filter((poll) => poll.post_id == post.id).length
+													polls.filter((poll) => poll.post_id == post.id).length
 
-												return poll.username == props.auth.username &&
+												return poll.id == props.auth.id &&
 													poll.post_id == post.id &&
 													poll.parameter == post.parameter_5
 											}) ?
@@ -483,43 +479,43 @@ const Index = (props) => {
 														{post.parameter_5}
 													</div>
 												</div>
-										: ""}
+										: ""} */}
 
 									{/* Total votes */}
-									{post.parameter_1 &&
+									{/* {post.parameter_1 &&
 										<small style={{ color: "grey" }}>
 											<i>
 												Total votes:
-												{post.parameter_1 && props.polls.filter((poll) => {
+												{post.parameter_1 && polls.filter((poll) => {
 													return poll.post_id == post.id
 												}).length}
 											</i>
 											<br />
-										</small>}
+										</small>} */}
 
 									{/* Post likes */}
-										<a href="#" style={{ color: "#cc3300" }} onClick={(e) => {
-											e.preventDefault()
-											onPostLike(post.id)
-										}}>
-											<svg xmlns='http://www.w3.org/2000/svg' width='1.2em' height='1.2em' fill='currentColor'
-												className='bi bi-heart-fill' viewBox='0 0 16 16'>
-												<path fillRule='evenodd'
-													d='M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z' />
-											</svg>
-											<small> </small>
-										</a> :
-										<a href="#" onClick={(e) => {
-											e.preventDefault()
-											onPostLike(post.id)
-										}}>
-											<svg xmlns='http://www.w3.org/2000/svg' width='1.2em' height='1.2em' fill='currentColor'
-												className='bi bi-heart' viewBox='0 0 16 16'>
-												<path
-													d='m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01L8 2.748zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143c.06.055.119.112.176.171a3.12 3.12 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15z' />
-											</svg>
-											<small></small>
-										</a>
+									<a href="#" style={{ color: "#cc3300" }} onClick={(e) => {
+										e.preventDefault()
+										onPostLike(post.id)
+									}}>
+										<svg xmlns='http://www.w3.org/2000/svg' width='1.2em' height='1.2em' fill='currentColor'
+											className='bi bi-heart-fill' viewBox='0 0 16 16'>
+											<path fillRule='evenodd'
+												d='M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z' />
+										</svg>
+										<small> </small>
+									</a> :
+									<a href="#" onClick={(e) => {
+										e.preventDefault()
+										onPostLike(post.id)
+									}}>
+										<svg xmlns='http://www.w3.org/2000/svg' width='1.2em' height='1.2em' fill='currentColor'
+											className='bi bi-heart' viewBox='0 0 16 16'>
+											<path
+												d='m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01L8 2.748zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143c.06.055.119.112.176.171a3.12 3.12 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15z' />
+										</svg>
+										<small></small>
+									</a>
 
 									{/* Post comments */}
 									<Link to={"post-show/" + post.id}>
@@ -543,11 +539,11 @@ const Index = (props) => {
 											</svg>
 										</a>
 										<div className="dropdown-menu dropdown-menu-right p-0" style={{ borderRadius: "0" }}>
-											{post.username !== props.auth.username ?
-												post.username !== "@blackmusic" &&
+											{post.id !== props.auth.id ?
+												post.id !== "@blackmusic" &&
 												<a href="#" className="dropdown-item" onClick={(e) => {
 													e.preventDefault()
-													onFollow(post.username)
+													onFollow(post.id)
 												}}>
 													<h6>Unfollow</h6>
 												</a>

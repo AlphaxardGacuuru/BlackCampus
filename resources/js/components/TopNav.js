@@ -95,7 +95,7 @@ const TopNav = (props) => {
 								<div className="menu-content-area d-flex align-items-center">
 									{/* <!-- Header Social Area --> */}
 									<div className="header-social-area d-flex align-items-center">
-										{props.auth.username == "@guest" ?
+										{props.auth.name == "Guest" ?
 											<AuthLinks {...props} /> :
 											<TopnavLinks {...props} />}
 									</div>

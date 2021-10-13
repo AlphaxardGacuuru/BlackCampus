@@ -23,8 +23,9 @@ Auth::routes();
 Route::get('login/github', 'Auth\LoginController@redirectToProvider');
 Route::get('login/github/callback', 'Auth\LoginController@handleProviderCallback');
 
+Route::get('home', 'HomeController@index');
+
 Route::resources([
-    'home' => 'HomeController',
     'follows' => "FollowsController",
     'follow-notifications' => "FollowNotificationsController",
     'notifications' => "NotificationsController",

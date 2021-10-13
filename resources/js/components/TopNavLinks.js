@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 import Img from "./Img"
 
 const TopNavLinks = (props) => {
-
+	
 	const logout = (e) => {
 		e.preventDefault()
 
@@ -14,7 +14,7 @@ const TopNavLinks = (props) => {
 					props.setMessage("Logged out")
 					props.setAuth({
 						"name": "Guest",
-						"username": "@guest",
+						"id": "@guest",
 						"pp": "profile-pics/male_avatar.png",
 						"account_type": "normal"
 					})
@@ -60,7 +60,7 @@ const TopNavLinks = (props) => {
 	return (
 		<>
 			{/* Admin */}
-			{props.auth.username == "@blackcampus" &&
+			{props.auth.id == "@blackcampus" &&
 				<Link to="/admin" className="mr-2">
 					<svg className="bi bi-person"
 						width="1em"
@@ -127,9 +127,7 @@ const TopNavLinks = (props) => {
 					data-toggle="dropdown"
 					aria-haspopup="true"
 					aria-expanded="false">
-					<Img src={props.auth.pp.match(/http/) ?
-						props.auth.pp :
-						`/storage/${props.auth.pp}`}
+					<Img src={props.auth.pp}
 						imgClass={"rounded-circle"}
 						width="25px"
 						height="25px"
@@ -138,9 +136,8 @@ const TopNavLinks = (props) => {
 				<div style={{ borderRadius: "0" }}
 					className="dropdown-menu dropdown-menu-right m-0 p-0"
 					aria-labelledby="dropdownMenuButton">
-					<Link to={`/profile/${props.auth.username}`} className="p-3 dropdown-item border-bottom">
+					<Link to={`/profile/${props.auth.id}`} className="p-3 dropdown-item border-bottom">
 						<h5>{props.auth.name}</h5>
-						<h6>{props.auth.username}</h6>
 					</Link>
 					<Link to='#'
 						id="btnAdd"

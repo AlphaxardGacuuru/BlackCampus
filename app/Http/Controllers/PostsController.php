@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Follows;
 use App\Polls;
 use App\PostCommentLikes;
 use App\PostComments;
@@ -21,7 +20,40 @@ class PostsController extends Controller
      */
     public function index()
     {
-		return Posts::all();
+        // return Posts::all();
+
+        $posts = Posts::all();
+
+        $users = User::all();
+
+        // Get leaders
+        foreach ($users as $key => $user) {
+            // Get leaders only
+            if ($user->account_type == "leader") {
+                $users[$key] = array(
+                    "id" => $user->id,
+                    "name" => $user->name,
+                    "account_type" => $user->account_type,
+                    "pp" => $user->pp,
+				);
+            }
+        }
+
+        // Get Posts
+        foreach ($posts as $key => $post) {
+            $posts[$key] = array(
+                "id" => $post->id,
+                "text" => $post->text,
+                "media" => $post->media,
+                "parameter_1" => $post->parameter_1,
+                "parameter_2" => $post->parameter_2,
+                "parameter_3" => $post->parameter_3,
+                "parameter_4" => $post->parameter_4,
+                "parameter_5" => $post->parameter_5,
+            );
+        }
+
+        return [$users, $posts];
     }
 
     /**

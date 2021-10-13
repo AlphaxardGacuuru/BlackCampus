@@ -5,9 +5,10 @@
 use App\Posts;
 use Faker\Generator as Faker;
 
-$factory->define(Posts::class, function (Faker $faker) {
+$factory->define(App\Posts::class, function (Faker $faker) {
+    $users = App\User::pluck('id')->toArray();
     return [
-        // 'user_id' => $faker->randomDigit,
+        'user_id' => $faker->randomElement($users),
         'text' => $faker->sentence,
         'media' => 'storage/img/Al.jpg',
         // 'parameter_1' => $faker->name,
