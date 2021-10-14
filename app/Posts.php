@@ -20,4 +20,9 @@ class Posts extends Model
     {
         return $this->hasMany('App\PostComments', 'post_id');
     }
+
+    public function polls()
+    {
+        return $this->hasMany('App\Polls', 'post_id');
+    }
 }

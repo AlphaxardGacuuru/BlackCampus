@@ -22,10 +22,9 @@ class PostsController extends Controller
     public function index()
     {
         $getUsers = User::where('id', '!=', auth()->user()->id)
+            ->where('id', '!=', 29)
             ->where('account_type', 'leader')
             ->get();
-
-        $getPosts = Posts::all();
 
         // Get leaders
         foreach ($getUsers as $key => $user) {
@@ -44,17 +43,24 @@ class PostsController extends Controller
             );
         }
 
+        $getPosts = Posts::where('user_id', '!=', 29)->orderBy('id', 'DESC')->get();
+
         // Get Posts
         foreach ($getPosts as $key => $post) {
+            // Check if user has followed leader
+            $hasFollowed = Follows::where('followed', $post->user_id)
+                ->where('user_id', auth()->user()->id)
+                ->exists();
 
             // Check if user has liked post
-            $hasLiked = PostLikes::where('id', $post->id)
+            $hasLiked = PostLikes::where('post_id', $post->id)
                 ->where('user_id', auth()->user()->id)
                 ->exists();
 
             $posts[$key] = array(
                 "id" => $post->id,
                 "user" => $post->user->name,
+                "user_id" => $post->user->id,
                 "text" => $post->text,
                 "media" => $post->media,
                 "parameter_1" => $post->parameter_1,
@@ -62,8 +68,10 @@ class PostsController extends Controller
                 "parameter_3" => $post->parameter_3,
                 "parameter_4" => $post->parameter_4,
                 "parameter_5" => $post->parameter_5,
+                "hasFollowed" => $hasFollowed,
                 "hasLiked" => $hasLiked,
-				"postLikes" => $post->postLikes,
+                "likes" => $post->postLikes->count(),
+                "comments" => $post->postComments->count(),
                 "created_at" => $post->created_at->format("d F Y"),
             );
         }
@@ -163,17 +171,25 @@ class PostsController extends Controller
      */
     public function destroy($id)
     {
-        $post = Posts::where('id', $id)->first();
-        Storage::delete('public/' . $post->media);
-        Polls::where('post_id', $post->id)->delete();
-        $postComment = PostComments::where('post_id', $id)->get();
-        foreach ($postComment as $postComment) {
-            PostCommentLikes::where('comment_id', $postComment->id)->delete();
-        }
-        PostComments::where('post_id', $id)->delete();
-        PostLikes::where('post_id', $id)->delete();
-        Posts::find($id)->delete();
+        // Check file extension and handle filepond delete accordingly
+        $ext = substr($id, -3);
 
-        return redirect('posts')->with('success', 'Post Deleted');
+        if ($ext == 'jpg' || $ext == 'png' || $ext == 'gif') {
+            Storage::delete('public/post-media/' . $id);
+            return response("Post media deleted", 200);
+        } else {
+            $post = Posts::where('id', $id)->first();
+            Storage::delete('public/' . $post->media);
+            Polls::where('post_id', $post->id)->delete();
+            $comments = PostComments::where('post_id', $id)->get();
+            foreach ($comments as $comment) {
+                PostCommentLikes::where('comment_id', $comment->id)->delete();
+            }
+            PostComments::where('post_id', $id)->delete();
+            PostLikes::where('post_id', $id)->delete();
+            Posts::find($id)->delete();
+
+            return response("Post deleted", 200);
+        }
     }
 }
