@@ -9,6 +9,7 @@ use App\PostComments;
 use App\PostLikes;
 use App\Posts;
 use App\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -57,6 +58,44 @@ class PostsController extends Controller
                 ->where('user_id', auth()->user()->id)
                 ->exists();
 
+            // Check if user has voted for parameter 1
+            $hasVoted1 = Polls::where('user_id', auth()->user()->id)
+                ->where('post_id', $post->id)
+                ->where('parameter', $post->parameter_1)
+                ->exists();
+            // Check if user has voted for parameter 2
+            $hasVoted2 = Polls::where('user_id', auth()->user()->id)
+                ->where('post_id', $post->id)
+                ->where('parameter', $post->parameter_2)
+                ->exists();
+
+            // Check if user has voted for parameter 3
+            $hasVoted3 = Polls::where('user_id', auth()->user()->id)
+                ->where('post_id', $post->id)
+                ->where('parameter', $post->parameter_3)
+                ->exists();
+
+            // Check if user has voted for parameter 4
+            $hasVoted4 = Polls::where('user_id', auth()->user()->id)
+                ->where('post_id', $post->id)
+                ->where('parameter', $post->parameter_4)
+                ->exists();
+
+            // Check if user has voted for parameter 5
+            $hasVoted5 = Polls::where('user_id', auth()->user()->id)
+                ->where('post_id', $post->id)
+                ->where('parameter', $post->parameter_5)
+                ->exists();
+
+            // Get total votes
+            $totalVotes = Polls::where("post_id", $post->id)
+                ->count();
+
+            // Check if poll is within 24Hrs
+            $isWithin24Hrs = Posts::where('id', $post->id)
+                ->where('created_at', '>', Carbon::now()->subDays(1)->toDateTimeString())
+                ->exists();
+
             $posts[$key] = array(
                 "id" => $post->id,
                 "user" => $post->user->name,
@@ -64,10 +103,17 @@ class PostsController extends Controller
                 "text" => $post->text,
                 "media" => $post->media,
                 "parameter_1" => $post->parameter_1,
+                "hasVoted1" => $hasVoted1,
                 "parameter_2" => $post->parameter_2,
+                "hasVoted2" => $hasVoted2,
                 "parameter_3" => $post->parameter_3,
+                "hasVoted3" => $hasVoted3,
                 "parameter_4" => $post->parameter_4,
+                "hasVoted4" => $hasVoted4,
                 "parameter_5" => $post->parameter_5,
+                "hasVoted5" => $hasVoted5,
+				"totalVotes" => $totalVotes,
+                "isWithin24Hrs" => $isWithin24Hrs,
                 "hasFollowed" => $hasFollowed,
                 "hasLiked" => $hasLiked,
                 "likes" => $post->postLikes->count(),

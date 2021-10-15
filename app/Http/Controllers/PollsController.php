@@ -35,7 +35,28 @@ class PollsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // Check if user has voted
+        $checkPoll = Polls::where('user_id', auth()->user()->id)
+            ->where('post_id', $request->input('post'))
+            ->first();
+
+        if (!$checkPoll) {
+            $poll = new Polls;
+            $poll->post_id = $request->input('post');
+            $poll->user_id = auth()->user()->id;
+            $poll->parameter = $request->input('parameter');
+            $poll->save();
+
+            $message = "Voted";
+        } else {
+            Polls::where('user_id', auth()->user()->id)
+                ->where('post_id', $request->input('post'))
+                ->delete();
+
+            $message = "Vote removed";
+        }
+
+        return response($message, 200);
     }
 
     /**

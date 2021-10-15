@@ -3258,8 +3258,8 @@ var Index = function Index(props) {
         parameter: parameter
       }).then(function (res) {
         props.setMessage(res.data);
-        axios__WEBPACK_IMPORTED_MODULE_1___default().get("".concat(props.url, "/api/polls")).then(function (res) {
-          return props.setPolls(res.data);
+        axios__WEBPACK_IMPORTED_MODULE_1___default().get("".concat(props.url, "/api/posts")).then(function (res) {
+          return setPosts(res.data.posts);
         });
       })["catch"](function (err) {
         var resErrors = err.response.data.errors;
@@ -3485,8 +3485,8 @@ var Index = function Index(props) {
                   width: "100%",
                   height: "auto"
                 })
-              }), post.parameter_1 ? post.isWithin24Hrs ? post.hasVoted ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_components_Button__WEBPACK_IMPORTED_MODULE_3__["default"], {
-                btnClass: "mysonar-btn btn-2 mb-1",
+              }), post.parameter_1 ? post.isWithin24Hrs ? post.hasVoted1 ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_components_Button__WEBPACK_IMPORTED_MODULE_3__["default"], {
+                btnClass: "btn btn-success rounded-0 mb-1",
                 btnText: post.parameter_1,
                 btnStyle: {
                   width: "100%"
@@ -3495,7 +3495,7 @@ var Index = function Index(props) {
                   return onPoll(post.id, post.parameter_1);
                 }
               }) : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_components_Button__WEBPACK_IMPORTED_MODULE_3__["default"], {
-                btnClass: "mysonar-btn mb-1",
+                btnClass: "btn btn-primary rounded-0 mb-1",
                 btnText: post.parameter_1,
                 btnStyle: {
                   width: "100%"
@@ -3503,7 +3503,7 @@ var Index = function Index(props) {
                 onClick: function onClick() {
                   return onPoll(post.id, post.parameter_1);
                 }
-              }) : post.hasVoted ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
+              }) : post.hasVoted1 ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
                 className: "progress rounded-0 mb-1",
                 style: {
                   height: '33px'
@@ -3512,7 +3512,7 @@ var Index = function Index(props) {
                   className: "progress-bar",
                   style: {
                     width: "".concat(percentage, "%"),
-                    backgroundColor: "#232323"
+                    backgroundColor: "#D0B216"
                   },
                   children: post.parameter_1
                 })
@@ -3529,8 +3529,8 @@ var Index = function Index(props) {
                   },
                   children: post.parameter_1
                 })
-              }) : "", post.parameter_2 ? post.isWithin24Hrs ? post.hasVoted ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_components_Button__WEBPACK_IMPORTED_MODULE_3__["default"], {
-                btnClass: "mysonar-btn btn-2 mb-1",
+              }) : "", post.parameter_2 ? post.isWithin24Hrs ? post.hasVoted2 ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_components_Button__WEBPACK_IMPORTED_MODULE_3__["default"], {
+                btnClass: "btn btn-success rounded-0 mb-1",
                 btnText: post.parameter_2,
                 btnStyle: {
                   width: "100%"
@@ -3539,7 +3539,7 @@ var Index = function Index(props) {
                   return onPoll(post.id, post.parameter_2);
                 }
               }) : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_components_Button__WEBPACK_IMPORTED_MODULE_3__["default"], {
-                btnClass: "mysonar-btn mb-1",
+                btnClass: "btn btn-primary rounded-0 mb-1",
                 btnText: post.parameter_2,
                 btnStyle: {
                   width: "100%"
@@ -3547,7 +3547,7 @@ var Index = function Index(props) {
                 onClick: function onClick() {
                   return onPoll(post.id, post.parameter_2);
                 }
-              }) : post.hasVoted ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
+              }) : post.hasVoted2 ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
                 className: "progress rounded-0 mb-1",
                 style: {
                   height: '33px'
@@ -3556,7 +3556,7 @@ var Index = function Index(props) {
                   className: "progress-bar",
                   style: {
                     width: "".concat(percentage, "%"),
-                    backgroundColor: "#232323"
+                    backgroundColor: "#D0B216"
                   },
                   children: post.parameter_2
                 })
@@ -3573,8 +3573,8 @@ var Index = function Index(props) {
                   },
                   children: post.parameter_2
                 })
-              }) : "", post.parameter_3 ? post.isWithin24Hrs ? post.hasVoted ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_components_Button__WEBPACK_IMPORTED_MODULE_3__["default"], {
-                btnClass: "mysonar-btn btn-2 mb-1",
+              }) : "", post.parameter_3 ? post.isWithin24Hrs ? post.hasVoted3 ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_components_Button__WEBPACK_IMPORTED_MODULE_3__["default"], {
+                btnClass: "btn btn-success rounded-0 mb-1",
                 btnText: post.parameter_3,
                 btnStyle: {
                   width: "100%"
@@ -3583,7 +3583,7 @@ var Index = function Index(props) {
                   return onPoll(post.id, post.parameter_3);
                 }
               }) : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_components_Button__WEBPACK_IMPORTED_MODULE_3__["default"], {
-                btnClass: "mysonar-btn mb-1",
+                btnClass: "btn btn-primary rounded-0 mb-1",
                 btnText: post.parameter_3,
                 btnStyle: {
                   width: "100%"
@@ -3591,7 +3591,7 @@ var Index = function Index(props) {
                 onClick: function onClick() {
                   return onPoll(post.id, post.parameter_3);
                 }
-              }) : post.hasVoted ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
+              }) : post.hasVoted3 ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
                 className: "progress rounded-0 mb-1",
                 style: {
                   height: '33px'
@@ -3600,7 +3600,7 @@ var Index = function Index(props) {
                   className: "progress-bar",
                   style: {
                     width: "".concat(percentage, "%"),
-                    backgroundColor: "#232323"
+                    backgroundColor: "#D0B216"
                   },
                   children: post.parameter_3
                 })
@@ -3617,8 +3617,8 @@ var Index = function Index(props) {
                   },
                   children: post.parameter_3
                 })
-              }) : "", post.parameter_4 ? post.isWithin24Hrs ? post.hasVoted ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_components_Button__WEBPACK_IMPORTED_MODULE_3__["default"], {
-                btnClass: "mysonar-btn btn-2 mb-1",
+              }) : "", post.parameter_4 ? post.isWithin24Hrs ? post.hasVoted4 ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_components_Button__WEBPACK_IMPORTED_MODULE_3__["default"], {
+                btnClass: "btn btn-success rounded-0 mb-1",
                 btnText: post.parameter_4,
                 btnStyle: {
                   width: "100%"
@@ -3627,7 +3627,7 @@ var Index = function Index(props) {
                   return onPoll(post.id, post.parameter_4);
                 }
               }) : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_components_Button__WEBPACK_IMPORTED_MODULE_3__["default"], {
-                btnClass: "mysonar-btn mb-1",
+                btnClass: "btn btn-primary rounded-0 mb-1",
                 btnText: post.parameter_4,
                 btnStyle: {
                   width: "100%"
@@ -3635,7 +3635,7 @@ var Index = function Index(props) {
                 onClick: function onClick() {
                   return onPoll(post.id, post.parameter_4);
                 }
-              }) : post.hasVoted ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
+              }) : post.hasVoted4 ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
                 className: "progress rounded-0 mb-1",
                 style: {
                   height: '33px'
@@ -3644,7 +3644,7 @@ var Index = function Index(props) {
                   className: "progress-bar",
                   style: {
                     width: "".concat(percentage, "%"),
-                    backgroundColor: "#232323"
+                    backgroundColor: "#D0B216"
                   },
                   children: post.parameter_4
                 })
@@ -3661,8 +3661,8 @@ var Index = function Index(props) {
                   },
                   children: post.parameter_4
                 })
-              }) : "", post.parameter_5 ? post.isWithin24Hrs ? post.hasVoted ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_components_Button__WEBPACK_IMPORTED_MODULE_3__["default"], {
-                btnClass: "mysonar-btn btn-2 mb-1",
+              }) : "", post.parameter_5 ? post.isWithin24Hrs ? post.hasVoted5 ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_components_Button__WEBPACK_IMPORTED_MODULE_3__["default"], {
+                btnClass: "btn btn-success rounded-0 mb-1",
                 btnText: post.parameter_5,
                 btnStyle: {
                   width: "100%"
@@ -3671,7 +3671,7 @@ var Index = function Index(props) {
                   return onPoll(post.id, post.parameter_5);
                 }
               }) : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_components_Button__WEBPACK_IMPORTED_MODULE_3__["default"], {
-                btnClass: "mysonar-btn mb-1",
+                btnClass: "btn btn-primary rounded-0 mb-1",
                 btnText: post.parameter_5,
                 btnStyle: {
                   width: "100%"
@@ -3679,7 +3679,7 @@ var Index = function Index(props) {
                 onClick: function onClick() {
                   return onPoll(post.id, post.parameter_5);
                 }
-              }) : post.hasVoted ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
+              }) : post.hasVoted5 ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
                 className: "progress rounded-0 mb-1",
                 style: {
                   height: '33px'
@@ -3688,7 +3688,7 @@ var Index = function Index(props) {
                   className: "progress-bar",
                   style: {
                     width: "".concat(percentage, "%"),
-                    backgroundColor: "#232323"
+                    backgroundColor: "#D0B216"
                   },
                   children: post.parameter_5
                 })
@@ -3710,7 +3710,7 @@ var Index = function Index(props) {
                   color: "grey"
                 },
                 children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("i", {
-                  children: ["Total votes: ", props.totalVotes]
+                  children: ["Total votes: ", post.totalVotes]
                 }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("br", {})]
               }), post.hasLiked ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("a", {
                 href: "#",
