@@ -100,7 +100,7 @@ class PostsController extends Controller
                 "id" => $post->id,
                 "user_id" => $post->user->id,
                 "user" => $post->user->name,
-				"pp" => $post->user->pp,
+                "pp" => $post->user->pp,
                 "text" => $post->text,
                 "media" => $post->media,
                 "parameter_1" => $post->parameter_1,
@@ -113,7 +113,7 @@ class PostsController extends Controller
                 "hasVoted4" => $hasVoted4,
                 "parameter_5" => $post->parameter_5,
                 "hasVoted5" => $hasVoted5,
-				"totalVotes" => $totalVotes,
+                "totalVotes" => $totalVotes,
                 "isWithin24Hrs" => $isWithin24Hrs,
                 "hasFollowed" => $hasFollowed,
                 "hasLiked" => $hasLiked,
@@ -182,9 +182,27 @@ class PostsController extends Controller
      */
     public function show($id)
     {
-        $post = Posts::where('id', $id)->first();
-        $comments = PostComments::where('post_id', $id)->orderby('id', 'DESC')->get();
-        return view('pages/post-show')->with(['post' => $post, 'comments' => $comments]);
+        $getComments = PostComments::where('post_id', $id)->orderby('id', 'DESC')->get();
+
+        foreach ($getComments as $key => $comment) {
+			// Check if user has liked
+			$hasLiked = PostCommentLikes::where('user_id', auth()->user()->id)
+			->where('comment_id', $comment->id)
+			->exists();
+
+           $comments[$key] = array(
+                "id" => $comment->id,
+                "user_id" => $comment->user->id,
+                "name" => $comment->user->name,
+                "pp" => $comment->user->pp,
+                "text" => $comment->text,
+				"hasLiked" => $hasLiked,
+				"likes" => $comment->postCommentLikes->count(),
+                "created_at" => $comment->created_at->format("d M Y"),
+            );
+        }
+
+        return $comments;
     }
 
     /**

@@ -35,19 +35,26 @@ class PostCommentLikesController extends Controller
      */
     public function store(Request $request)
     {
-        $postCommentLikeCount = PostCommentLikes::where('comment_id', $request->input('comment-id'))->where('user_id', auth()->user()->id)->count();
-        if ($postCommentLikeCount > 0) {
-            PostCommentLikes::where('comment_id', $request->input('comment-id'))->where('user_id', auth()->user()->id)->delete();
+        $hasLiked = PostCommentLikes::where('comment_id', $request->input('comment'))
+            ->where('user_id', auth()->user()->id)
+            ->exists();
+
+        if ($hasLiked) {
+            PostCommentLikes::where('comment_id', $request->input('comment'))
+                ->where('user_id', auth()->user()->id)
+                ->delete();
+
             $message = 'Like deleted';
         } else {
             $postCommentLikes = new PostCommentLikes;
-            $postCommentLikes->comment_id = $request->input('comment-id');
+            $postCommentLikes->comment_id = $request->input('comment');
             $postCommentLikes->user_id = auth()->user()->id;
             $postCommentLikes->save();
+
             $message = 'Comment liked';
         }
 
-        return redirect('posts/' . $request->input('post-id'))->with('success', $message);
+        return response($message, 200);
     }
 
     /**

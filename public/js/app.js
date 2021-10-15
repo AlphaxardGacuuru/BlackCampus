@@ -3188,7 +3188,7 @@ var Index = function Index(props) {
       setLeaders(res.data.leaders);
       setPosts(res.data.posts);
     })["catch"](function (err) {
-      return props.setErrors([err.data]);
+      return props.setErrors(["Failed to fetch posts"]);
     });
   }, []); // Function for following musicians
 
@@ -3913,8 +3913,16 @@ var PostShow = function PostShow(props) {
   var _useState3 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]),
       _useState4 = _slicedToArray(_useState3, 2),
       postComments = _useState4[0],
-      setPostComments = _useState4[1]; // Function for posting comment
+      setPostComments = _useState4[1]; // Fetch comments
 
+
+  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
+    axios__WEBPACK_IMPORTED_MODULE_1___default().get("".concat(props.url, "/api/posts/").concat(id)).then(function (res) {
+      return setPostComments(res.data);
+    })["catch"](function (err) {
+      return props.setErrors(["Failed to fetch post comments"]);
+    });
+  }, []); // Function for posting comment
 
   var onComment = function onComment(e) {
     e.preventDefault();
@@ -3924,7 +3932,7 @@ var PostShow = function PostShow(props) {
         text: text
       }).then(function (res) {
         props.setMessage(res.data);
-        axios__WEBPACK_IMPORTED_MODULE_1___default().get("".concat(props.url, "/api/post/").concat(id)).then(function (res) {
+        axios__WEBPACK_IMPORTED_MODULE_1___default().get("".concat(props.url, "/api/posts/").concat(id)).then(function (res) {
           return setPostComments(res.data);
         });
       })["catch"](function (err) {
@@ -3949,7 +3957,7 @@ var PostShow = function PostShow(props) {
         comment: comment
       }).then(function (res) {
         props.setMessage(res.data);
-        axios__WEBPACK_IMPORTED_MODULE_1___default().get("".concat(props.url, "/api/post-comment-likes")).then(function (res) {
+        axios__WEBPACK_IMPORTED_MODULE_1___default().get("".concat(props.url, "/api/posts/").concat(id)).then(function (res) {
           return setPostComments(res.data);
         });
       })["catch"](function (err) {
@@ -3961,17 +3969,18 @@ var PostShow = function PostShow(props) {
           newError.push(resErrors[resError]);
         }
 
+        newError.push(err.response.data.message);
         props.setErrors(newError);
       });
     });
   }; // Function for deleting comments
 
 
-  var onDeleteComment = function onDeleteComment(id) {
+  var onDeleteComment = function onDeleteComment(comment) {
     axios__WEBPACK_IMPORTED_MODULE_1___default().get('sanctum/csrf-cookie').then(function () {
-      axios__WEBPACK_IMPORTED_MODULE_1___default()["delete"]("".concat(props.url, "/api/post-comments/").concat(id)).then(function (res) {
+      axios__WEBPACK_IMPORTED_MODULE_1___default()["delete"]("".concat(props.url, "/api/post-comments/").concat(comment)).then(function (res) {
         props.setMessage(res.data);
-        axios__WEBPACK_IMPORTED_MODULE_1___default().get("".concat(props.url, "/api/post-comments")).then(function (res) {
+        axios__WEBPACK_IMPORTED_MODULE_1___default().get("".concat(props.url, "/api/posts/").concat(id)).then(function (res) {
           return setPostComments(res.data);
         });
       })["catch"](function (err) {
@@ -3983,6 +3992,7 @@ var PostShow = function PostShow(props) {
           newError.push(resErrors[resError]);
         }
 
+        newError.push(err.response.data.message);
         props.setErrors(newError);
       });
     });
@@ -4073,22 +4083,6 @@ var PostShow = function PostShow(props) {
               },
               children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("b", {
                 children: comment.name
-              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("span", {
-                style: {
-                  color: "gold"
-                },
-                children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("svg", {
-                  className: "bi bi-circle",
-                  width: "1em",
-                  height: "1em",
-                  viewBox: "0 0 16 16",
-                  fill: "currentColor",
-                  xmlns: "http://www.w3.org/2000/svg",
-                  children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("path", {
-                    fillRule: "evenodd",
-                    d: "M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"
-                  })
-                })
               }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("small", {
                 children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("i", {
                   className: "float-right mr-1",
@@ -4098,7 +4092,7 @@ var PostShow = function PostShow(props) {
             }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("p", {
               className: "mb-0",
               children: comment.text
-            }), comment.hasLiked ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("a", {
+            }), comment.hasLiked ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("a", {
               href: "#",
               style: {
                 color: "#cc3300"
@@ -4107,7 +4101,7 @@ var PostShow = function PostShow(props) {
                 e.preventDefault();
                 onCommentLike(comment.id);
               },
-              children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("svg", {
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("svg", {
                 xmlns: "http://www.w3.org/2000/svg",
                 width: "1.2em",
                 height: "1.2em",
@@ -4118,14 +4112,17 @@ var PostShow = function PostShow(props) {
                   fillRule: "evenodd",
                   d: "M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z"
                 })
-              })
-            }) : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("a", {
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("small", {
+                className: "ml-1",
+                children: comment.likes
+              })]
+            }) : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("a", {
               href: "#",
               onClick: function onClick(e) {
                 e.preventDefault();
                 onCommentLike(comment.id);
               },
-              children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("svg", {
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("svg", {
                 xmlns: "http://www.w3.org/2000/svg",
                 width: "1.2em",
                 height: "1.2em",
@@ -4135,7 +4132,10 @@ var PostShow = function PostShow(props) {
                 children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("path", {
                   d: "m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01L8 2.748zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143c.06.055.119.112.176.171a3.12 3.12 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15z"
                 })
-              })
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("small", {
+                className: "ml-1",
+                children: comment.likes
+              })]
             }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("small", {
               className: "ml-1",
               children: comment.comments

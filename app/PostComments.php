@@ -11,7 +11,7 @@ class PostComments extends Model
         return $this->belongsTo('App\User');
     }
 
-    public function post_comment_likes()
+    public function postCommentLikes()
     {
         return $this->hasMany('App\PostCommentLikes', 'comment_id');
     }

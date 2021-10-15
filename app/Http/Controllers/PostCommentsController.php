@@ -48,13 +48,13 @@ class PostCommentsController extends Controller
     {
         /* Create new post */
         $postComment = new PostComments;
-        $postComment->post_id = $request->input('post-id');
+        $postComment->post_id = $request->input('post');
         $postComment->user_id = auth()->user()->id;
-        $postComment->text = $request->input('comment-text');
+        $postComment->text = $request->input('text');
         $postComment->media = "";
         $postComment->save();
 
-        return redirect('posts/' . $postComment->post_id)->with('success', 'Comment Sent');
+        return response('Comment Sent', 200);
     }
 
     /**
@@ -102,6 +102,7 @@ class PostCommentsController extends Controller
         $postComment = PostComments::where('id', $id)->first();
         PostCommentLikes::where('comment_id', $id)->delete();
         PostComments::find($id)->delete();
-        return redirect('posts/' . $postComment->post_id)->with('success', 'Comment deleted');
+
+        return response('Comment deleted', 200);
     }
 }

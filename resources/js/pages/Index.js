@@ -18,7 +18,7 @@ const Index = (props) => {
 			.then((res) => {
 				setLeaders(res.data.leaders)
 				setPosts(res.data.posts)
-			}).catch((err) => props.setErrors([err.data]))
+			}).catch((err) => props.setErrors(["Failed to fetch posts"]))
 	}, [])
 
 	// Function for following musicians
