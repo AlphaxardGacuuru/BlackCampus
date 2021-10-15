@@ -8,6 +8,7 @@ import BottomNav from './BottomNav'
 import LoginPopUp from './LoginPopUp';
 
 import Index from '../pages/Index';
+import Profile from '../pages/Profile';
 import PostShow from '../pages/PostShow';
 
 // import LoginPopUp from '../auth/LoginPopUp';
@@ -63,6 +64,10 @@ function App() {
 
 			<Route path="/" exact render={() => (
 				<Index {...{ url, auth, setMessage, setErrors }} />
+			)} />
+
+			<Route path="/profile/:user_id" exact render={() => (
+				<Profile {...{ url, auth, setMessage, setErrors }} />
 			)} />
 
 			<Route path="/post-show/:id" exact render={() => (

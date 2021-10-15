@@ -49,12 +49,19 @@ class UsersController extends Controller
      */
     public function show($id)
     {
-        $posts = Posts::orderBy('id', 'desc')->get();
-        $users = User::orderBy('id', 'desc')->get();
-        $follows = Follows::get();
-        $polls = Polls::get();
+        $getUser = User::where('id', $id)->first();
 
-        return view('pages/user')->with(['follows' => $follows, 'posts' => $posts, 'polls' => $polls, 'id' => $id, 'users' => $users]);
+        // Get profile info
+        $profile = array(
+            "name" => $getUser->name,
+            "email" => $getUser->email,
+            "pp" => $getUser->pp,
+            "following" => Follows::where('followed',  auth()->user()->id)->where('user_id', $id)->count(),
+            "followers" => Follows::where('followed',  $id)->where('user_id', auth()->user()->id)->count(),
+            "hasFollowed" => Follows::where('followed', $id)->where('user_id', auth()->user()->id)->exists(),
+        );
+
+        return response(["profile" => $profile]);
     }
 
     /**

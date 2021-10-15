@@ -1,24 +1,27 @@
 import React, { useState, useEffect } from 'react'
-import { Link, useHistory, useLocation } from 'react-router-dom'
+import { Link, useParams, useHistory } from "react-router-dom";
 import axios from 'axios'
 
 import Img from '../components/Img'
 import Button from '../components/Button'
 
-const Index = (props) => {
+const Profile = (props) => {
 
-	const history = useHistory()
+	let { user_id } = useParams();
 
-	const [leaders, setLeaders] = useState([])
+	const [profile, setProfile] = useState([])
 	const [posts, setPosts] = useState([])
 
 	useEffect(() => {
-		// Get Content
+		// Get Profile info
+		axios.get(`${props.url}/api/users/${user_id}`)
+			.then((res) => setProfile(res.data.profile))
+			.catch(() => props.setErrors(["Failed to fetch Profile"]))
+
+		// Get posts
 		axios.get(`${props.url}/api/posts`)
-			.then((res) => {
-				setLeaders(res.data.leaders)
-				setPosts(res.data.posts)
-			}).catch((err) => props.setErrors(["Failed to fetch posts"]))
+			.then((res) => setPosts(res.data.posts))
+			.catch(() => props.setErrors(["Failed to fetch Posts"]))
 	}, [])
 
 	// Function for following leaders
@@ -28,7 +31,7 @@ const Index = (props) => {
 				id: id
 			}).then((res) => {
 				props.setMessage(res.data)
-				axios.get(`${props.url}/api/posts`).then((res) => setLeaders(res.data.leaders))
+				axios.get(`${props.url}/api/users/${user_id}`).then((res) => setProfile(res.data.profile))
 				axios.get(`${props.url}/api/posts`).then((res) => setPosts(res.data.posts))
 			}).catch((err) => {
 				const resErrors = err.response.data.errors
@@ -43,6 +46,7 @@ const Index = (props) => {
 			})
 		});
 	}
+
 
 	// Function for liking posts
 	const onPostLike = (post) => {
@@ -73,7 +77,7 @@ const Index = (props) => {
 				.then((res) => {
 					props.setMessage(res.data)
 					axios.get(`${props.url}/api/posts`).then((res) => setPosts(res.data.posts))
-					axios.get(`${props.url}/api/posts`).then((res) => setLeaders(res.data.leaders))
+					axios.get(`${props.url}/api/users/${user_id}`).then((res) => setProfile(res.data.profile))
 				}).catch((err) => {
 					const resErrors = err.response.data.errors
 					var resError
@@ -113,107 +117,84 @@ const Index = (props) => {
 
 	return (
 		<>
-			{/* Post button */}
-			{props.auth.account_type == 'leader' &&
-				<Link to="/post-create" id="floatBtn">
-					<svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" className="bi bi-pen"
-						viewBox="0 0 16 16">
-						<path
-							d="M13.498.795l.149-.149a1.207 1.207 0 1 1 1.707 1.708l-.149.148a1.5 1.5 0 0 1-.059 2.059L4.854 14.854a.5.5 0 0 1-.233.131l-4 1a.5.5 0 0 1-.606-.606l1-4a.5.5 0 0 1 .131-.232l9.642-9.642a.5.5 0 0 0-.642.056L6.854 4.854a.5.5 0 1 1-.708-.708L9.44.854A1.5 1.5 0 0 1 11.5.796a1.5 1.5 0 0 1 1.998-.001zm-.644.766a.5.5 0 0 0-.707 0L1.95 11.756l-.764 3.057 3.057-.764L14.44 3.854a.5.5 0 0 0 0-.708l-1.585-1.585z" />
-					</svg>
-				</Link>}
-
-			{/* <!-- Profile info area --> */}
-			<div className="row">
-				<div className="col-sm-1 hidden"></div>
-				<div className="col-sm-3 hidden">
-					<div className="d-flex border">
-						<div className="p-2">
-							<div className="avatar-thumbnail-sm" style={{ borderRadius: "50%" }}>
-								<Link to={"/profile/" + props.auth.id}>
-									<Img src={props.auth.pp}
-										width="100px"
-										height="100px"
-										alt="avatar" />
-								</Link>
-							</div>
-						</div>
-						<div className="p-2 flex-grow-1">
-							<h5 className="m-0 p-0"
-								style={{
-									width: "160px",
-									whiteSpace: "nowrap",
-									overflow: "hidden",
-									textOverflow: "clip"
-								}}>
-								{props.auth.name}
-							</h5>
-							<h6 className="m-0 p-0"
-								style={{
-									width: "140px",
-									whiteSpace: "nowrap",
-									overflow: "hidden",
-									textOverflow: "clip"
-								}}>
-								<small>{props.auth.account_type}</small>
-							</h6>
-						</div>
-					</div>
-					<div className="d-flex border-bottom border-left border-right">
-						<div className="p-2 flex-fill">
-							<h6>Posts</h6>
-							{props.auth.posts}
-						</div>
-						<div className="p-2 flex-fill" style={{ color: "purple" }}>
-							<h6>Followers</h6>
-							{props.auth.followers}
-						</div>
-					</div>
-					{/* <!-- Profile info area End --> */}
-
+			<div className="row p-0 m-0"
+				style={{
+					backgroundImage: "url('/storage/img/headphones.jpg')",
+					backgroundPosition: "center",
+					backgroundSize: "cover",
+					position: "relative",
+					height: "100%"
+				}}>
+				<div className="col-sm-12 p-0">
 					<br />
-
-					{/* <!-- Leader suggestions area --> */}
-					<div className="border">
-						<div className="p-2 border-bottom">
-							<h2>Leaders to follow</h2>
+					<br className="hidden" />
+					<div>
+						<div style={{ marginTop: "100px", top: "70px", left: "10px" }} className="avatar-container">
+							<Img style={{ position: "absolute", zIndex: "99" }}
+								imgClass="avatar hover-img"
+								src={profile.pp} />
 						</div>
-						{leaders.map((leader, key) => (
-							<div key={key} className='media p-2 border-bottom'>
-								<div className='media-left'>
-									<Link to={`/profile/:${leader.id}`}>
-										<Img src={leader.pp} width="30px" height="30px" alt="musician" />
-									</Link>
-								</div>
-								<div className='media-body'>
-									<Link to={`/profile/${leader.id}`} className="text-dark">
-										<b>{leader.name}</b>
-									</Link>
-									{leader.hasFollowed ?
-										<button className={'btn btn-sm btn-light float-right rounded-0'}
-											onClick={() => onFollow(leader.id)}>
-											Followed
-											<svg className='bi bi-check'
-												width='1.5em'
-												height='1.5em'
-												viewBox='0 0 16 16'
-												fill='currentColor'
-												xmlns='http://www.w3.org/2000/svg'>
-												<path fillRule='evenodd'
-													d='M10.97 4.97a.75.75 0 0 1 1.071 1.05l-3.992 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.236.236 0 0 1 .02-.022z' />
-											</svg>
-										</button> :
-										<Button btnClass={'btn btn-sm btn-success rounded-0 float-right'}
-											onClick={() => onFollow(leader.id)}
-											btnText={'follow'} />}
-								</div>
-							</div>
-						))}
 					</div>
 				</div>
-				{/* <!-- Leader suggestion area end --> */}
+			</div>
+			{/* <!-- End of Profile pic area --> */}
 
+			{/* {{-- Profile Area --}} */}
+			<div className="row border-bottom">
+				<div className="col-sm-1"></div>
+				<div className="col-sm-10">
+					<br />
+					<br />
+					<br className="anti-hidden" />
+					{/* Check whether user has bought at least one song from musician */}
+					{/* Check whether user has followed musician and display appropriate button */}
+					{user_id != props.auth.id ?
+						profile.hasFollowed ?
+						<button className={'btn btn-sm btn-light rounded-0 float-right'}
+							onClick={() => onFollow(user_id)}>
+							Followed
+							<svg
+								className='bi bi-check'
+								width='1.5em'
+								height='1.5em'
+								viewBox='0 0 16 16'
+								fill='currentColor'
+								xmlns='http://www.w3.org/2000/svg'>
+								<path fillRule='evenodd'
+									d='M10.97 4.97a.75.75 0 0 1 1.071 1.05l-3.992 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.236.236 0 0 1 .02-.022z' />
+							</svg>
+						</button>
+						: <Button
+							btnClass={'btn btn-sm btn-success rounded-0 float-right'}
+							onClick={() => onFollow(user_id)}
+							btnText={'follow'} /> : ""}
+					<div>
+						<h3>{profile.name}</h3>
+					</div>
+					<div className="d-flex flex-row">
+						<div className="p-2">Following
+							<br />
+							{profile.following}
+						</div>
+						<div className="p-2">Fans
+							<br />
+							{profile.followers}
+						</div>
+					</div>
+				</div>
+				<div className="col-sm-1"></div>
+			</div>
+			{/* {{-- End of Profile Area --}} */}
+
+			<div className="row">
+				<div className="col-sm-4"></div>
 				<div className="col-sm-4">
+					<center className="hidden"><h4>Posts</h4></center>
+					{profile.posts == 0 &&
+						<center>
+							<h6 style={{ color: "grey" }}>{username} does not have any posts</h6>
+						</center>}
+
 					{/* <!-- ****** Stories Area ****** --> */}
 					<div className="p-2 border">
 						<h5>Stories for you</h5>
@@ -223,12 +204,12 @@ const Index = (props) => {
 					{/* <!-- ****** Stories Area End ****** --> */}
 
 					{/* <!-- Posts area --> */}
-					{posts.filter((post) => post.hasFollowed == true)
+					{posts.filter((post) => post.user_id == user_id)
 						.map((post, index) => (
 							<div key={index} className='media p-2 border-bottom'>
 								<div className='media-left'>
 									<div className="avatar-thumbnail-xs" style={{ borderRadius: "50%" }}>
-										<Link to={`/profile/${post.user_id}`}>
+										<Link to={`/profile/${post.id}`}>
 											<Img src={`${post.pp}`}
 												width="40px"
 												height="40px"
@@ -473,7 +454,7 @@ const Index = (props) => {
 										</a>}
 
 									{/* Post comments */}
-									<Link to={"post-show/" + post.id}>
+									<Link to={"/post-show/" + post.id}>
 										<svg className="bi bi-chat ml-5"
 											width="1.2em"
 											height="1.2em"
@@ -505,15 +486,8 @@ const Index = (props) => {
 											</svg>
 										</a>
 										<div className="dropdown-menu dropdown-menu-right" style={{ borderRadius: "0" }}>
-											{post.user_id != props.auth.id ?
-												post.user_id != 29 &&
-												<a href="#" className="dropdown-item" onClick={(e) => {
-													e.preventDefault()
-													onFollow(post.user_id)
-												}}>
-													<h6>Unfollow</h6>
-												</a>
-												: <a href='#' className="dropdown-item" onClick={(e) => {
+											{post.user_id == props.auth.id &&
+												<a href='#' className="dropdown-item" onClick={(e) => {
 													e.preventDefault();
 													onDeletePost(post.id)
 												}}>
@@ -528,12 +502,10 @@ const Index = (props) => {
 				</div>
 				{/* <!-- Posts area end --> */}
 
-				<div className="col-sm-3"></div>
-
-				<div className="col-sm-1"></div>
+				<div className="col-sm-4"></div>
 			</div>
 		</>
 	)
 }
 
-export default Index
+export default Profile

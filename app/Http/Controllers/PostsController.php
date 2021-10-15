@@ -87,6 +87,72 @@ class PostsController extends Controller
                 ->where('parameter', $post->parameter_5)
                 ->exists();
 
+            // Get percentage for parameter 1
+			// Get total polls for parameter 1
+            $totalParameter1 = Polls::where('post_id', $post->id)
+                ->where('parameter', $post->parameter_1)
+                ->count();
+
+            // Check if total polls for parameter 1 is not 0
+            if ($totalParameter1 > 0) {
+                $percentage1 = Polls::where('post_id', $post->id)->count() /
+                    $totalParameter1 * 100;
+            } else {
+                $percentage1 = 0;
+            }
+
+			// Get total polls for parameter 2
+            $totalParameter2 = Polls::where('post_id', $post->id)
+                ->where('parameter', $post->parameter_2)
+                ->count();
+
+            // Check if total polls for parameter 2 is not 0
+            if ($totalParameter2 > 0) {
+                $percentage2 = Polls::where('post_id', $post->id)->count() /
+                    $totalParameter2 * 100;
+            } else {
+                $percentage2 = 0;
+            }
+
+			// Get total polls for parameter 3
+            $totalParameter3 = Polls::where('post_id', $post->id)
+                ->where('parameter', $post->parameter_3)
+                ->count();
+
+            // Check if total polls for parameter 1 is not 0
+            if ($totalParameter3 > 0) {
+                $percentage3 = Polls::where('post_id', $post->id)->count() /
+                    $totalParameter3 * 100;
+            } else {
+                $percentage3 = 0;
+            }
+
+			// Get total polls for parameter 4
+            $totalParameter4 = Polls::where('post_id', $post->id)
+                ->where('parameter', $post->parameter_4)
+                ->count();
+
+            // Check if total polls for parameter 1 is not 0
+            if ($totalParameter4 > 0) {
+                $percentage4 = Polls::where('post_id', $post->id)->count() /
+                    $totalParameter4 * 100;
+            } else {
+                $percentage4 = 0;
+            }
+
+			// Get total polls for parameter 5
+            $totalParameter5 = Polls::where('post_id', $post->id)
+                ->where('parameter', $post->parameter_5)
+                ->count();
+
+            // Check if total polls for parameter 5 is not 0
+            if ($totalParameter5 > 0) {
+                $percentage5 = Polls::where('post_id', $post->id)->count() /
+                    $totalParameter5 * 100;
+            } else {
+                $percentage5 = 0;
+            }
+
             // Get total votes
             $totalVotes = Polls::where("post_id", $post->id)
                 ->count();
@@ -104,15 +170,20 @@ class PostsController extends Controller
                 "text" => $post->text,
                 "media" => $post->media,
                 "parameter_1" => $post->parameter_1,
-                "hasVoted1" => $hasVoted1,
                 "parameter_2" => $post->parameter_2,
-                "hasVoted2" => $hasVoted2,
                 "parameter_3" => $post->parameter_3,
-                "hasVoted3" => $hasVoted3,
                 "parameter_4" => $post->parameter_4,
-                "hasVoted4" => $hasVoted4,
                 "parameter_5" => $post->parameter_5,
+                "hasVoted1" => $hasVoted1,
+                "hasVoted2" => $hasVoted2,
+                "hasVoted3" => $hasVoted3,
+                "hasVoted4" => $hasVoted4,
                 "hasVoted5" => $hasVoted5,
+                "percentage1" => $percentage1,
+                "percentage2" => $percentage2,
+                "percentage3" => $percentage3,
+                "percentage4" => $percentage4,
+                "percentage5" => $percentage5,
                 "totalVotes" => $totalVotes,
                 "isWithin24Hrs" => $isWithin24Hrs,
                 "hasFollowed" => $hasFollowed,
@@ -185,19 +256,19 @@ class PostsController extends Controller
         $getComments = PostComments::where('post_id', $id)->orderby('id', 'DESC')->get();
 
         foreach ($getComments as $key => $comment) {
-			// Check if user has liked
-			$hasLiked = PostCommentLikes::where('user_id', auth()->user()->id)
-			->where('comment_id', $comment->id)
-			->exists();
+            // Check if user has liked
+            $hasLiked = PostCommentLikes::where('user_id', auth()->user()->id)
+                ->where('comment_id', $comment->id)
+                ->exists();
 
-           $comments[$key] = array(
+            $comments[$key] = array(
                 "id" => $comment->id,
                 "user_id" => $comment->user->id,
                 "name" => $comment->user->name,
                 "pp" => $comment->user->pp,
                 "text" => $comment->text,
-				"hasLiked" => $hasLiked,
-				"likes" => $comment->postCommentLikes->count(),
+                "hasLiked" => $hasLiked,
+                "likes" => $comment->postCommentLikes->count(),
                 "created_at" => $comment->created_at->format("d M Y"),
             );
         }
