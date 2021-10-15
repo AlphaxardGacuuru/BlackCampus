@@ -98,8 +98,9 @@ class PostsController extends Controller
 
             $posts[$key] = array(
                 "id" => $post->id,
-                "user" => $post->user->name,
                 "user_id" => $post->user->id,
+                "user" => $post->user->name,
+				"pp" => $post->user->pp,
                 "text" => $post->text,
                 "media" => $post->media,
                 "parameter_1" => $post->parameter_1,

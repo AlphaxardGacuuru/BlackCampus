@@ -234,7 +234,7 @@ const Index = (props) => {
 								<div className='media-left'>
 									<div className="avatar-thumbnail-xs" style={{ borderRadius: "50%" }}>
 										<Link to={`/profile/${post.id}`}>
-											<Img src={`${props.auth.pp}`}
+											<Img src={`${post.pp}`}
 												width="40px"
 												height="40px"
 												alt={'avatar'} />

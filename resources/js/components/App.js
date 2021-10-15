@@ -5,9 +5,10 @@ import { HashRouter as Router, Route, Redirect, useHistory, useLocation } from '
 import TopNav from './TopNav'
 import Messages from './Messages'
 import BottomNav from './BottomNav'
+import LoginPopUp from './LoginPopUp';
 
 import Index from '../pages/Index';
-import LoginPopUp from './LoginPopUp';
+import PostShow from '../pages/PostShow';
 
 // import LoginPopUp from '../auth/LoginPopUp';
 
@@ -62,6 +63,13 @@ function App() {
 
 			<Route path="/" exact render={() => (
 				<Index {...{ url, auth, setMessage, setErrors }} />
+			)} />
+
+			<Route path="/post-show/:id" exact render={() => (
+				<>
+					<PostShow {...{ url, auth, setMessage, setErrors }} />
+					{auth.user_id == 29 && <LoginPopUp {...{ url, auth, setAuth, setLogin, setMessage, setErrors }} />}
+				</>
 			)} />
 
 			<BottomNav {...{ url, auth, setMessage, setErrors, setAuth }} />
