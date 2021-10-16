@@ -104,9 +104,10 @@ a:focus {
     width: 480px;
     height: 100%;
     top: 0;
-    right: -500px;
+    /* right: -500px; */
+    right: 0px;
     background-color: #182B5C;
-    z-index: 99999;
+    z-index: 994;
     text-align: center;
     -webkit-box-orient: vertical;
     -webkit-box-direction: normal;
@@ -211,12 +212,14 @@ a:focus {
 @media only screen and (min-width: 992px) and (max-width: 1199px) {
     .mainMenu {
         padding: 30px 15px;
+    right: -500px;
     }
 }
 
 @media only screen and (min-width: 768px) and (max-width: 991px) {
     .mainMenu {
         padding: 30px 15px;
+    right: -500px;
     }
 }
 
@@ -224,6 +227,7 @@ a:focus {
     .mainMenu {
         padding: 15px;
         width: 300px;
+    right: -500px;
     }
 }
 
@@ -242,7 +246,7 @@ a:focus {
     /* Place the button at the bottom of the page */
     right: 30px;
     /* Place the button 30px from the right */
-    z-index: 99;
+    z-index: 996;
     /* Make sure it does not overlap */
     border: none;
     /* Remove borders */

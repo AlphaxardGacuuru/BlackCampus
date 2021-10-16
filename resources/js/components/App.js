@@ -9,9 +9,8 @@ import LoginPopUp from './LoginPopUp';
 
 import Index from '../pages/Index';
 import Profile from '../pages/Profile';
+import PostCreate from '../pages/PostCreate';
 import PostShow from '../pages/PostShow';
-
-// import LoginPopUp from '../auth/LoginPopUp';
 
 function App() {
 	// Declare states
@@ -68,6 +67,13 @@ function App() {
 
 			<Route path="/profile/:user_id" exact render={() => (
 				<Profile {...{ url, auth, setMessage, setErrors }} />
+			)} />
+
+			<Route path="/post-create" exact render={() => (
+				<>
+					<PostCreate {...{ url, auth, setMessage, setErrors }} />
+					{auth.user_id == 29 && <LoginPopUp {...{ url, auth, setAuth, setLogin, setMessage, setErrors }} />}
+				</>
 			)} />
 
 			<Route path="/post-show/:id" exact render={() => (

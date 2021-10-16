@@ -88,7 +88,7 @@ class PostsController extends Controller
                 ->exists();
 
             // Get percentage for parameter 1
-			// Get total polls for parameter 1
+            // Get total polls for parameter 1
             $totalParameter1 = Polls::where('post_id', $post->id)
                 ->where('parameter', $post->parameter_1)
                 ->count();
@@ -101,7 +101,7 @@ class PostsController extends Controller
                 $percentage1 = 0;
             }
 
-			// Get total polls for parameter 2
+            // Get total polls for parameter 2
             $totalParameter2 = Polls::where('post_id', $post->id)
                 ->where('parameter', $post->parameter_2)
                 ->count();
@@ -114,7 +114,7 @@ class PostsController extends Controller
                 $percentage2 = 0;
             }
 
-			// Get total polls for parameter 3
+            // Get total polls for parameter 3
             $totalParameter3 = Polls::where('post_id', $post->id)
                 ->where('parameter', $post->parameter_3)
                 ->count();
@@ -127,7 +127,7 @@ class PostsController extends Controller
                 $percentage3 = 0;
             }
 
-			// Get total polls for parameter 4
+            // Get total polls for parameter 4
             $totalParameter4 = Polls::where('post_id', $post->id)
                 ->where('parameter', $post->parameter_4)
                 ->count();
@@ -140,7 +140,7 @@ class PostsController extends Controller
                 $percentage4 = 0;
             }
 
-			// Get total polls for parameter 5
+            // Get total polls for parameter 5
             $totalParameter5 = Polls::where('post_id', $post->id)
                 ->where('parameter', $post->parameter_5)
                 ->count();
@@ -215,34 +215,31 @@ class PostsController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validate($request, [
-            'post-text' => 'required',
-            'post-media' => 'image|nullable|max:9999',
-        ]);
-
-        /* Handle file upload */
-        if ($request->hasFile('post-media')) {
-            //$path = $request->file('post-media')->store('public/post-media');
-            $path = 'public/post-media/' . $request->file('post-media')->hashName();
-            $compressedImg = Image::make($request->file('post-media'))->encode('jpg', 50);
-            Storage::put($path, $compressedImg);
+        if ($request->hasFile('filepond-media')) {
+            /* Handle media upload */
+            $media = $request->file('filepond-media')->store('public/post-media');
+            $media = substr($media, 7);
+            return $media;
         } else {
-            $path = "";
+
+            $this->validate($request, [
+                'post-text' => 'required',
+            ]);
+
+            /* Create new post */
+            $post = new Posts;
+            $post->user_id = auth()->user()->id;
+            $post->text = $request->input('post-text');
+            $post->media = $request->input('media');
+            $post->parameter_1 = $request->input('poll_1') ? $request->input('poll_1') : "";
+            $post->parameter_2 = $request->input('poll_2') ? $request->input('poll_2') : "";
+            $post->parameter_3 = $request->input('poll_3') ? $request->input('poll_3') : "";
+            $post->parameter_4 = $request->input('poll_4') ? $request->input('poll_4') : "";
+            $post->parameter_5 = $request->input('poll_5') ? $request->input('poll_5') : "";
+            $post->save();
+
+            return redirect('posts')->with('success', 'Post Sent');
         }
-
-        /* Create new post */
-        $post = new Posts;
-        $post->user_id = auth()->user()->id;
-        $post->text = $request->input('post-text');
-        $post->media = substr($path, 7);
-        $post->parameter_1 = $request->input('poll_1') ? $request->input('poll_1') : "";
-        $post->parameter_2 = $request->input('poll_2') ? $request->input('poll_2') : "";
-        $post->parameter_3 = $request->input('poll_3') ? $request->input('poll_3') : "";
-        $post->parameter_4 = $request->input('poll_4') ? $request->input('poll_4') : "";
-        $post->parameter_5 = $request->input('poll_5') ? $request->input('poll_5') : "";
-        $post->save();
-
-        return redirect('posts')->with('success', 'Post Sent');
     }
 
     /**

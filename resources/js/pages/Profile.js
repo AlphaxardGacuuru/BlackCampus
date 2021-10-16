@@ -261,7 +261,7 @@ const Profile = (props) => {
 												<div className='progress rounded-0 mb-1' style={{ height: '33px' }}>
 													<div className='progress-bar'
 														style={{
-															width: `${post.percentage}%`,
+															width: `${post.percentage1}%`,
 															backgroundColor: "#182B5C"
 														}}>
 														{post.parameter_1}
@@ -270,7 +270,7 @@ const Profile = (props) => {
 												: <div className='progress rounded-0 mb-1' style={{ height: '33px' }}>
 													<div className='progress-bar'
 														style={{
-															width: `${post.percentage}%`,
+															width: `${post.percentage1}%`,
 															backgroundColor: "grey"
 														}}>
 														{post.parameter_1}
@@ -295,7 +295,7 @@ const Profile = (props) => {
 												<div className='progress rounded-0 mb-1' style={{ height: '33px' }}>
 													<div className='progress-bar'
 														style={{
-															width: `${post.percentage}%`,
+															width: `${post.percentage2}%`,
 															backgroundColor: "#182B5C"
 														}}>
 														{post.parameter_2}
@@ -304,7 +304,7 @@ const Profile = (props) => {
 												: <div className='progress rounded-0 mb-1' style={{ height: '33px' }}>
 													<div className='progress-bar'
 														style={{
-															width: `${post.percentage}%`,
+															width: `${post.percentage2}%`,
 															backgroundColor: "grey"
 														}}>
 														{post.parameter_2}
@@ -329,7 +329,7 @@ const Profile = (props) => {
 												<div className='progress rounded-0 mb-1' style={{ height: '33px' }}>
 													<div className='progress-bar'
 														style={{
-															width: `${post.percentage}%`,
+															width: `${post.percentage3}%`,
 															backgroundColor: "#182B5C"
 														}}>
 														{post.parameter_3}
@@ -338,7 +338,7 @@ const Profile = (props) => {
 												: <div className='progress rounded-0 mb-1' style={{ height: '33px' }}>
 													<div className='progress-bar'
 														style={{
-															width: `${post.percentage}%`,
+															width: `${post.percentage3}%`,
 															backgroundColor: "grey"
 														}}>
 														{post.parameter_3}
@@ -362,14 +362,14 @@ const Profile = (props) => {
 											: post.hasVoted4 ?
 												<div className='progress rounded-0 mb-1' style={{ height: '33px' }}>
 													<div className='progress-bar'
-														style={{ width: `${post.percentage}%`, backgroundColor: "#182B5C" }}>
+														style={{ width: `${post.percentage4}%`, backgroundColor: "#182B5C" }}>
 														{post.parameter_4}
 													</div>
 												</div>
 												: <div className='progress rounded-0 mb-1' style={{ height: '33px' }}>
 													<div className='progress-bar'
 														style={{
-															width: `${post.percentage}%`,
+															width: `${post.percentage4}%`,
 															backgroundColor: "grey"
 														}}>
 														{post.parameter_4}
@@ -394,7 +394,7 @@ const Profile = (props) => {
 												<div className='progress rounded-0 mb-1' style={{ height: '33px' }}>
 													<div className='progress-bar'
 														style={{
-															width: `${post.percentage}%`,
+															width: `${post.percentage5}%`,
 															backgroundColor: "#182B5C"
 														}}>
 														{post.parameter_5}
@@ -403,7 +403,7 @@ const Profile = (props) => {
 												<div className='progress rounded-0 mb-1' style={{ height: '33px' }}>
 													<div className='progress-bar'
 														style={{
-															width: `${post.percentage}%`,
+															width: `${post.percentage5}%`,
 															backgroundColor: "grey"
 														}}>
 														{post.parameter_5}
