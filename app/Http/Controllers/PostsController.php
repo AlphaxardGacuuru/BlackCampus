@@ -40,6 +40,7 @@ class PostsController extends Controller
                 "name" => $user->name,
                 "account_type" => $user->account_type,
                 "pp" => $user->pp,
+                "bio" => $user->bio,
                 "hasFollowed" => $hasFollowed,
             );
         }

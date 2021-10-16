@@ -11,6 +11,7 @@ import Index from '../pages/Index';
 import Profile from '../pages/Profile';
 import PostCreate from '../pages/PostCreate';
 import PostShow from '../pages/PostShow';
+import Leaders from '../pages/Leaders';
 
 function App() {
 	// Declare states
@@ -81,6 +82,10 @@ function App() {
 					<PostShow {...{ url, auth, setMessage, setErrors }} />
 					{auth.user_id == 29 && <LoginPopUp {...{ url, auth, setAuth, setLogin, setMessage, setErrors }} />}
 				</>
+			)} />
+
+			<Route path="/leaders" exact render={() => (
+					<Leaders {...{ url, auth, setMessage, setErrors }} />
 			)} />
 
 			<BottomNav {...{ url, auth, setMessage, setErrors, setAuth }} />

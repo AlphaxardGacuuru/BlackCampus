@@ -1,13 +1,11 @@
 import React, { useState, useEffect } from 'react'
-import { Link, useHistory, useLocation } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import axios from 'axios'
 
 import Img from '../components/Img'
 import Button from '../components/Button'
 
 const Index = (props) => {
-
-	const history = useHistory()
 
 	const [leaders, setLeaders] = useState([])
 	const [posts, setPosts] = useState([])
