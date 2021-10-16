@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\StoriesController;
+use App\Stories;
 use Illuminate\Http\Request;
 
-class StoriesControllerController extends Controller
+class StoriesController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,7 +14,23 @@ class StoriesControllerController extends Controller
      */
     public function index()
     {
-        //
+        // Check if story is within 24Hrs
+        Stories::where('created_at', '>', Carbon::now()->subDays(1)->toDateTimeString())
+            ->delete();
+
+        $stories = Stories::all();
+
+        foreach ($stories as $key => $story) {
+            $stories[$key] = array(
+                "id" => $story->id,
+                "user_id" => $story->user->id,
+                "name" => $story->user->name,
+                "pp" => $story->user->pp,
+                "media" => $story->media,
+            );
+        }
+
+        return $stories;
     }
 
     /**
@@ -41,12 +57,12 @@ class StoriesControllerController extends Controller
         // Get proper location for media
         $media = '/storage/' . substr($media, 7);
 
-        $story = new Story;
+        $story = new Stories;
         $story->user_id = auth()->user()->id;
         $story->media = $media;
         $story->save();
 
-        return response("Story posted", 200);
+        return $media;
     }
 
     /**

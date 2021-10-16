@@ -38,6 +38,7 @@ const Index = (props) => {
 
 	const [leaders, setLeaders] = useState([])
 	const [posts, setPosts] = useState([])
+	const [stories, setStories] = useState([])
 
 	useEffect(() => {
 		// Get Content
@@ -46,6 +47,11 @@ const Index = (props) => {
 				setLeaders(res.data.leaders)
 				setPosts(res.data.posts)
 			}).catch((err) => props.setErrors(["Failed to fetch posts"]))
+
+		// Get stories
+		axios.get(`${props.url}/api/stories`)
+			.then((res) => setStories(res.data))
+			.catch((err) => props.setErrors(["Failed to fetch stories"]))
 	}, [])
 
 	// Function for following leaders
@@ -246,19 +252,20 @@ const Index = (props) => {
 						<h5>Stories for you</h5>
 						<div className="hidden-scroll">
 							{/* Add Story */}
-							<span>
-								<center>
-									<div className="avatar-thumbnail"
-										style={{
-											borderRadius: "50%",
-											borderTop: "2px solid #182B5C",
-											borderRight: "2px solid #182B5C",
-											borderBottom: "2px solid #D0B216",
-											borderLeft: "2px solid #182B5C",
-										}}>
-										<FilePond
-											name="filepond-profile-pic"
-											labelIdle='<span class="filepond--label-action">
+							{!stories.some((story) => story.user_id == props.auth.id) ?
+								<span>
+									<center>
+										<div className="avatar-thumbnail"
+											style={{
+												borderRadius: "50%",
+												borderTop: "2px solid #182B5C",
+												borderRight: "2px solid #182B5C",
+												borderBottom: "2px solid #D0B216",
+												borderLeft: "2px solid #182B5C",
+											}}>
+											<FilePond
+												name="filepond-media"
+												labelIdle='<span class="filepond--label-action">
 											<svg xmlns="http://www.w3.org/2000/svg"
 												width="3rem"
 												height="3rem"
@@ -268,64 +275,37 @@ const Index = (props) => {
 												<path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z" />
 											</svg>
 											</span>'
-											stylePanelLayout="compact circle"
-											imageCropAspectRatio="9:16"
-											acceptedFileTypes={['image/*']}
-											stylePanelAspectRatio="1:1"
-											allowRevert={false}
-											server={{
-												url: `${props.url}/api`,
-												process: {
-													url: `/stories`,
-													headers: { 'X-CSRF-TOKEN': token.content },
-													onload: res => {
-														props.setMessage("Story posted")
-														// axios.get(`${props.url}/api/posts`).then((res) => setPosts(res.data.posts))
-													},
-													onerror: (err) => console.log()
-												}
-											}} />
-									</div>
-									<h6 className="mt-2 mb-0"
-										style={{
-											width: "100px",
-											whiteSpace: "nowrap",
-											overflow: "hidden",
-											textOverflow: "clip"
-										}}>
-										Your story
-									</h6>
-								</center>
-							</span>
-							<span className="pt-0 px-0 pb-2">
-								<center>
-									<div className="card avatar-thumbnail"
-										style={{
-											borderRadius: "50%",
-											borderTop: "2px solid #182B5C",
-											borderRight: "2px solid #182B5C",
-											borderBottom: "2px solid #D0B216",
-											borderLeft: "2px solid #182B5C",
-										}}>
-										<Link to={"/gallery/"}>
-											<Img src={props.auth.pp} width='150px' height='150px' />
-										</Link>
-									</div>
-									<h6 className="mt-2 mb-0"
-										style={{
-											width: "100px",
-											whiteSpace: "nowrap",
-											overflow: "hidden",
-											textOverflow: "clip"
-										}}>
-										Your story
-									</h6>
-								</center>
-							</span>
-
-							{/* Show stories */}
-							{leaders.map((leader, key) => (
-								<span key={key} className="pt-0 px-0 pb-2">
+												stylePanelLayout="compact circle"
+												imageCropAspectRatio="9:16"
+												acceptedFileTypes={['image/*']}
+												stylePanelAspectRatio="1:1"
+												allowRevert={false}
+												server={{
+													url: `${props.url}/api`,
+													process: {
+														url: `/stories`,
+														headers: { 'X-CSRF-TOKEN': token.content },
+														onload: res => {
+															props.setMessage("Story posted")
+															axios.get(`${props.url}/api/stories`)
+																.then((res) => setStories(res.data))
+														},
+														onerror: (err) => console.log()
+													}
+												}} />
+										</div>
+										<h6 className="mt-2 mb-0"
+											style={{
+												width: "100px",
+												whiteSpace: "nowrap",
+												overflow: "hidden",
+												textOverflow: "clip"
+											}}>
+											Your story
+										</h6>
+									</center>
+								</span> :
+								<span className="pt-0 px-0 pb-2">
 									<center>
 										<div className="card avatar-thumbnail"
 											style={{
@@ -336,7 +316,7 @@ const Index = (props) => {
 												borderLeft: "2px solid #182B5C",
 											}}>
 											<Link to={"/gallery/"}>
-												<Img src={leader.pp} width='150px' height='150px' />
+												<Img src={props.auth.pp} width='150px' height='150px' />
 											</Link>
 										</div>
 										<h6 className="mt-2 mb-0"
@@ -346,11 +326,40 @@ const Index = (props) => {
 												overflow: "hidden",
 												textOverflow: "clip"
 											}}>
-											{leader.name}
+											Your story
 										</h6>
 									</center>
-								</span>
-							))}
+								</span>}
+
+							{/* Show stories */}
+							{stories.filter((story) => story.user_id != props.auth.id)
+								.map((story, key) => (
+									<span key={key} className="pt-0 px-0 pb-2">
+										<center>
+											<div className="card avatar-thumbnail"
+												style={{
+													borderRadius: "50%",
+													borderTop: "2px solid #182B5C",
+													borderRight: "2px solid #182B5C",
+													borderBottom: "2px solid #D0B216",
+													borderLeft: "2px solid #182B5C",
+												}}>
+												<Link to={"/gallery/"}>
+													<Img src={story.pp} width='150px' height='150px' />
+												</Link>
+											</div>
+											<h6 className="mt-2 mb-0"
+												style={{
+													width: "100px",
+													whiteSpace: "nowrap",
+													overflow: "hidden",
+													textOverflow: "clip"
+												}}>
+												{story.name}
+											</h6>
+										</center>
+									</span>
+								))}
 						</div>
 					</div>
 					{/* <!-- ****** Stories Area End ****** --> */}

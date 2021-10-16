@@ -34,5 +34,6 @@ Route::resources([
     'post-comments' => 'PostCommentsController',
     'post-comment-likes' => 'PostCommentLikesController',
     'polls' => 'PollsController',
+    'stories' => 'StoriesController',
     'users' => 'UsersController',
 ]);

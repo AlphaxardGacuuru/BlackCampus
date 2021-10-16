@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateStoriesControllersTable extends Migration
+class CreateStoriesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreateStoriesControllersTable extends Migration
      */
     public function up()
     {
-        Schema::create('stories_controllers', function (Blueprint $table) {
+        Schema::create('stories', function (Blueprint $table) {
             $table->id();
             $table->string('user_id')->nullable();
             $table->string('media')->nullable();
@@ -28,6 +28,6 @@ class CreateStoriesControllersTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('stories_controllers');
+        Schema::dropIfExists('stories');
     }
 }

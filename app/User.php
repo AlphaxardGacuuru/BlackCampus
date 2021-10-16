@@ -40,4 +40,9 @@ class User extends Authenticatable
     {
         return $this->hasMany('App\Posts', 'id', 'user_id');
     }
+
+	public function stories()
+	{
+		return $this->hasMany('App\Stories');
+	}
 }

@@ -3298,6 +3298,11 @@ var Index = function Index(props) {
       posts = _useState4[0],
       setPosts = _useState4[1];
 
+  var _useState5 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]),
+      _useState6 = _slicedToArray(_useState5, 2),
+      stories = _useState6[0],
+      setStories = _useState6[1];
+
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
     // Get Content
     axios__WEBPACK_IMPORTED_MODULE_1___default().get("".concat(props.url, "/api/posts")).then(function (res) {
@@ -3305,6 +3310,12 @@ var Index = function Index(props) {
       setPosts(res.data.posts);
     })["catch"](function (err) {
       return props.setErrors(["Failed to fetch posts"]);
+    }); // Get stories
+
+    axios__WEBPACK_IMPORTED_MODULE_1___default().get("".concat(props.url, "/api/stories")).then(function (res) {
+      return setStories(res.data);
+    })["catch"](function (err) {
+      return props.setErrors(["Failed to fetch stories"]);
     });
   }, []); // Function for following leaders
 
@@ -3561,7 +3572,9 @@ var Index = function Index(props) {
             children: "Stories for you"
           }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_13__.jsxs)("div", {
             className: "hidden-scroll",
-            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_13__.jsx)("span", {
+            children: [!stories.some(function (story) {
+              return story.user_id == props.auth.id;
+            }) ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_13__.jsx)("span", {
               children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_13__.jsxs)("center", {
                 children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_13__.jsx)("div", {
                   className: "avatar-thumbnail",
@@ -3573,7 +3586,7 @@ var Index = function Index(props) {
                     borderLeft: "2px solid #182B5C"
                   },
                   children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_13__.jsx)(react_filepond__WEBPACK_IMPORTED_MODULE_4__.FilePond, {
-                    name: "filepond-profile-pic",
+                    name: "filepond-media",
                     labelIdle: "<span class=\"filepond--label-action\">\r <svg xmlns=\"http://www.w3.org/2000/svg\"\r width=\"3rem\"\r height=\"3rem\"\r fill=\"currentColor\"\r className=\"bi bi-plus\"\r viewBox=\"0 0 16 16\">\r <path d=\"M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z\" />\r </svg>\r </span>",
                     stylePanelLayout: "compact circle",
                     imageCropAspectRatio: "9:16",
@@ -3588,7 +3601,10 @@ var Index = function Index(props) {
                           'X-CSRF-TOKEN': token.content
                         },
                         onload: function onload(res) {
-                          props.setMessage("Story posted"); // axios.get(`${props.url}/api/posts`).then((res) => setPosts(res.data.posts))
+                          props.setMessage("Story posted");
+                          axios__WEBPACK_IMPORTED_MODULE_1___default().get("".concat(props.url, "/api/stories")).then(function (res) {
+                            return setStories(res.data);
+                          });
                         },
                         onerror: function onerror(err) {
                           return console.log();
@@ -3607,7 +3623,7 @@ var Index = function Index(props) {
                   children: "Your story"
                 })]
               })
-            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_13__.jsx)("span", {
+            }) : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_13__.jsx)("span", {
               className: "pt-0 px-0 pb-2",
               children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_13__.jsxs)("center", {
                 children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_13__.jsx)("div", {
@@ -3638,7 +3654,9 @@ var Index = function Index(props) {
                   children: "Your story"
                 })]
               })
-            }), leaders.map(function (leader, key) {
+            }), stories.filter(function (story) {
+              return story.user_id != props.auth.id;
+            }).map(function (story, key) {
               return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_13__.jsx)("span", {
                 className: "pt-0 px-0 pb-2",
                 children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_13__.jsxs)("center", {
@@ -3654,7 +3672,7 @@ var Index = function Index(props) {
                     children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_13__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_14__.Link, {
                       to: "/gallery/",
                       children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_13__.jsx)(_components_Img__WEBPACK_IMPORTED_MODULE_2__["default"], {
-                        src: leader.pp,
+                        src: story.pp,
                         width: "150px",
                         height: "150px"
                       })
@@ -3667,7 +3685,7 @@ var Index = function Index(props) {
                       overflow: "hidden",
                       textOverflow: "clip"
                     },
-                    children: leader.name
+                    children: story.name
                   })]
                 })
               }, key);
