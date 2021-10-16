@@ -5,7 +5,36 @@ import axios from 'axios'
 import Img from '../components/Img'
 import Button from '../components/Button'
 
+// Import React FilePond
+import { FilePond, registerPlugin } from 'react-filepond';
+
+// Import FilePond styles
+import 'filepond/dist/filepond.min.css';
+
+// Import the Image EXIF Orientation and Image Preview plugins
+// Note: These need to be installed separately
+import FilePondPluginImageExifOrientation from 'filepond-plugin-image-exif-orientation';
+import FilePondPluginImagePreview from 'filepond-plugin-image-preview';
+import FilePondPluginFileValidateType from 'filepond-plugin-file-validate-type';
+import FilePondPluginImageCrop from 'filepond-plugin-image-crop';
+import FilePondPluginImageTransform from 'filepond-plugin-image-transform';
+import FilePondPluginFileValidateSize from 'filepond-plugin-file-validate-size';
+import 'filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css';
+
+// Register the plugins
+registerPlugin(
+	FilePondPluginImageExifOrientation,
+	FilePondPluginImagePreview,
+	FilePondPluginFileValidateType,
+	FilePondPluginImageCrop,
+	FilePondPluginImageTransform,
+	FilePondPluginFileValidateSize
+);
+
 const Index = (props) => {
+
+	// Get csrf token
+	const token = document.head.querySelector('meta[name="csrf-token"]');
 
 	const [leaders, setLeaders] = useState([])
 	const [posts, setPosts] = useState([])
@@ -216,6 +245,112 @@ const Index = (props) => {
 					<div className="p-2 border">
 						<h5>Stories for you</h5>
 						<div className="hidden-scroll">
+							{/* Add Story */}
+							<span>
+								<center>
+									<div className="avatar-thumbnail"
+										style={{
+											borderRadius: "50%",
+											borderTop: "2px solid #182B5C",
+											borderRight: "2px solid #182B5C",
+											borderBottom: "2px solid #D0B216",
+											borderLeft: "2px solid #182B5C",
+										}}>
+										<FilePond
+											name="filepond-profile-pic"
+											labelIdle='<span class="filepond--label-action">
+											<svg xmlns="http://www.w3.org/2000/svg"
+												width="3rem"
+												height="3rem"
+												fill="currentColor"
+												className="bi bi-plus"
+												viewBox="0 0 16 16">
+												<path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z" />
+											</svg>
+											</span>'
+											stylePanelLayout="compact circle"
+											imageCropAspectRatio="9:16"
+											acceptedFileTypes={['image/*']}
+											stylePanelAspectRatio="1:1"
+											allowRevert={false}
+											server={{
+												url: `${props.url}/api`,
+												process: {
+													url: `/stories`,
+													headers: { 'X-CSRF-TOKEN': token.content },
+													onload: res => {
+														props.setMessage("Story posted")
+														// axios.get(`${props.url}/api/posts`).then((res) => setPosts(res.data.posts))
+													},
+													onerror: (err) => console.log()
+												}
+											}} />
+									</div>
+									<h6 className="mt-2 mb-0"
+										style={{
+											width: "100px",
+											whiteSpace: "nowrap",
+											overflow: "hidden",
+											textOverflow: "clip"
+										}}>
+										Your story
+									</h6>
+								</center>
+							</span>
+							<span className="pt-0 px-0 pb-2">
+								<center>
+									<div className="card avatar-thumbnail"
+										style={{
+											borderRadius: "50%",
+											borderTop: "2px solid #182B5C",
+											borderRight: "2px solid #182B5C",
+											borderBottom: "2px solid #D0B216",
+											borderLeft: "2px solid #182B5C",
+										}}>
+										<Link to={"/gallery/"}>
+											<Img src={props.auth.pp} width='150px' height='150px' />
+										</Link>
+									</div>
+									<h6 className="mt-2 mb-0"
+										style={{
+											width: "100px",
+											whiteSpace: "nowrap",
+											overflow: "hidden",
+											textOverflow: "clip"
+										}}>
+										Your story
+									</h6>
+								</center>
+							</span>
+
+							{/* Show stories */}
+							{leaders.map((leader, key) => (
+								<span key={key} className="pt-0 px-0 pb-2">
+									<center>
+										<div className="card avatar-thumbnail"
+											style={{
+												borderRadius: "50%",
+												borderTop: "2px solid #182B5C",
+												borderRight: "2px solid #182B5C",
+												borderBottom: "2px solid #D0B216",
+												borderLeft: "2px solid #182B5C",
+											}}>
+											<Link to={"/gallery/"}>
+												<Img src={leader.pp} width='150px' height='150px' />
+											</Link>
+										</div>
+										<h6 className="mt-2 mb-0"
+											style={{
+												width: "100px",
+												whiteSpace: "nowrap",
+												overflow: "hidden",
+												textOverflow: "clip"
+											}}>
+											{leader.name}
+										</h6>
+									</center>
+								</span>
+							))}
 						</div>
 					</div>
 					{/* <!-- ****** Stories Area End ****** --> */}

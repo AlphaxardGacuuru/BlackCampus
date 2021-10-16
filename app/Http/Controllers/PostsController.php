@@ -227,11 +227,14 @@ class PostsController extends Controller
                 'post-text' => 'required',
             ]);
 
+			// Get proper location for media
+			$media = '/storage/' . $request->input('media');
+
             /* Create new post */
             $post = new Posts;
             $post->user_id = auth()->user()->id;
             $post->text = $request->input('post-text');
-            $post->media = $request->input('media');
+            $post->media = $media;
             $post->parameter_1 = $request->input('poll_1') ? $request->input('poll_1') : "";
             $post->parameter_2 = $request->input('poll_2') ? $request->input('poll_2') : "";
             $post->parameter_3 = $request->input('poll_3') ? $request->input('poll_3') : "";
