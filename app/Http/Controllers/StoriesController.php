@@ -15,8 +15,9 @@ class StoriesController extends Controller
     public function index()
     {
         // Check if story is within 24Hrs
-        Stories::where('created_at', '>', Carbon::now()->subDays(1)->toDateTimeString())
-            ->delete();
+        // Stories::where('created_at', '<', Carbon::now()->subDays(1)->toDateTimeString())->get();
+        // ->delete();
+        // Storage::delete('public/post-media/' . substr($story->media));
 
         $stories = Stories::all();
 

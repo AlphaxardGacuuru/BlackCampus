@@ -31,6 +31,8 @@ function App() {
 	const [notifications, setNotifications] = useState([])
 	const [followNotifications, setFollowNotifications] = useState([])
 
+	const [showTopNav, setShowTopNav] = useState(true)
+
 	// Reset Messages and Errors to null after 3 seconds
 	if (errors.length > 0 || message.length > 0) {
 		setTimeout(() => setErrors([]), 3000);
@@ -60,10 +62,11 @@ function App() {
 			{/* Login Pop Up */}
 			{login && <LoginPopUp {...{ url, auth, setAuth, setLogin, setMessage, setErrors }} />}
 
-			<TopNav {...{ url, auth, login, setLogin, setMessage, setErrors, setAuth, notifications, followNotifications }} />
+			{showTopNav &&
+				<TopNav {...{ url, auth, login, setLogin, setMessage, setErrors, setAuth, notifications, followNotifications }} />}
 
 			<Route path="/" exact render={() => (
-				<Index {...{ url, auth, setMessage, setErrors }} />
+				<Index {...{ url, auth, setMessage, setErrors, setShowTopNav }} />
 			)} />
 
 			<Route path="/profile/:user_id" exact render={() => (
@@ -85,7 +88,7 @@ function App() {
 			)} />
 
 			<Route path="/leaders" exact render={() => (
-					<Leaders {...{ url, auth, setMessage, setErrors }} />
+				<Leaders {...{ url, auth, setMessage, setErrors }} />
 			)} />
 
 			<BottomNav {...{ url, auth, setMessage, setErrors, setAuth }} />

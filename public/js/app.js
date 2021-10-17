@@ -2214,7 +2214,12 @@ function App() {
   var _useState13 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]),
       _useState14 = _slicedToArray(_useState13, 2),
       followNotifications = _useState14[0],
-      setFollowNotifications = _useState14[1]; // Reset Messages and Errors to null after 3 seconds
+      setFollowNotifications = _useState14[1];
+
+  var _useState15 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(true),
+      _useState16 = _slicedToArray(_useState15, 2),
+      showTopNav = _useState16[0],
+      setShowTopNav = _useState16[1]; // Reset Messages and Errors to null after 3 seconds
 
 
   if (errors.length > 0 || message.length > 0) {
@@ -2255,7 +2260,7 @@ function App() {
       setLogin: setLogin,
       setMessage: setMessage,
       setErrors: setErrors
-    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsx)(_TopNav__WEBPACK_IMPORTED_MODULE_2__["default"], {
+    }), showTopNav && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsx)(_TopNav__WEBPACK_IMPORTED_MODULE_2__["default"], {
       url: url,
       auth: auth,
       login: login,
@@ -2273,7 +2278,8 @@ function App() {
           url: url,
           auth: auth,
           setMessage: setMessage,
-          setErrors: setErrors
+          setErrors: setErrors,
+          setShowTopNav: setShowTopNav
         });
       }
     }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_13__.Route, {
@@ -3303,6 +3309,16 @@ var Index = function Index(props) {
       stories = _useState6[0],
       setStories = _useState6[1];
 
+  var _useState7 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(),
+      _useState8 = _slicedToArray(_useState7, 2),
+      showStory = _useState8[0],
+      setShowStory = _useState8[1];
+
+  var _useState9 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(),
+      _useState10 = _slicedToArray(_useState9, 2),
+      storyImage = _useState10[0],
+      setStoryImage = _useState10[1];
+
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
     // Get Content
     axios__WEBPACK_IMPORTED_MODULE_1___default().get("".concat(props.url, "/api/posts")).then(function (res) {
@@ -3425,6 +3441,18 @@ var Index = function Index(props) {
         props.setErrors(newError);
       });
     });
+  }; // Show story
+
+
+  var onStory = function onStory(story) {
+    // Hide topnav
+    props.setShowTopNav(false);
+    setStoryImage(story);
+    setShowStory(true);
+    setTimeout(function () {
+      setShowStory(false);
+      props.setShowTopNav(true);
+    }, 10000);
   };
 
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_13__.jsxs)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_13__.Fragment, {
@@ -3441,6 +3469,15 @@ var Index = function Index(props) {
         children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_13__.jsx)("path", {
           d: "M13.498.795l.149-.149a1.207 1.207 0 1 1 1.707 1.708l-.149.148a1.5 1.5 0 0 1-.059 2.059L4.854 14.854a.5.5 0 0 1-.233.131l-4 1a.5.5 0 0 1-.606-.606l1-4a.5.5 0 0 1 .131-.232l9.642-9.642a.5.5 0 0 0-.642.056L6.854 4.854a.5.5 0 1 1-.708-.708L9.44.854A1.5 1.5 0 0 1 11.5.796a1.5 1.5 0 0 1 1.998-.001zm-.644.766a.5.5 0 0 0-.707 0L1.95 11.756l-.764 3.057 3.057-.764L14.44 3.854a.5.5 0 0 0 0-.708l-1.585-1.585z"
         })
+      })
+    }), showStory && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_13__.jsx)("div", {
+      id: "preloader",
+      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_13__.jsx)("img", {
+        src: storyImage,
+        style: {
+          maxHeight: window.innerHeight,
+          maxWidth: window.innerWidth
+        }
       })
     }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_13__.jsxs)("div", {
       className: "row",
@@ -3574,7 +3611,7 @@ var Index = function Index(props) {
             className: "hidden-scroll",
             children: [!stories.some(function (story) {
               return story.user_id == props.auth.id;
-            }) ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_13__.jsx)("span", {
+            }) && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_13__.jsx)("span", {
               children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_13__.jsxs)("center", {
                 children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_13__.jsx)("div", {
                   className: "avatar-thumbnail",
@@ -3623,42 +3660,12 @@ var Index = function Index(props) {
                   children: "Your story"
                 })]
               })
-            }) : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_13__.jsx)("span", {
-              className: "pt-0 px-0 pb-2",
-              children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_13__.jsxs)("center", {
-                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_13__.jsx)("div", {
-                  className: "card avatar-thumbnail",
-                  style: {
-                    borderRadius: "50%",
-                    borderTop: "2px solid #182B5C",
-                    borderRight: "2px solid #182B5C",
-                    borderBottom: "2px solid #D0B216",
-                    borderLeft: "2px solid #182B5C"
-                  },
-                  children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_13__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_14__.Link, {
-                    to: "/gallery/",
-                    children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_13__.jsx)(_components_Img__WEBPACK_IMPORTED_MODULE_2__["default"], {
-                      src: props.auth.pp,
-                      width: "150px",
-                      height: "150px"
-                    })
-                  })
-                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_13__.jsx)("h6", {
-                  className: "mt-2 mb-0",
-                  style: {
-                    width: "100px",
-                    whiteSpace: "nowrap",
-                    overflow: "hidden",
-                    textOverflow: "clip"
-                  },
-                  children: "Your story"
-                })]
-              })
-            }), stories.filter(function (story) {
-              return story.user_id != props.auth.id;
-            }).map(function (story, key) {
+            }), stories.map(function (story, key) {
               return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_13__.jsx)("span", {
                 className: "pt-0 px-0 pb-2",
+                onClick: function onClick() {
+                  return onStory(story.media);
+                },
                 children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_13__.jsxs)("center", {
                   children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_13__.jsx)("div", {
                     className: "card avatar-thumbnail",
@@ -3670,7 +3677,7 @@ var Index = function Index(props) {
                       borderLeft: "2px solid #182B5C"
                     },
                     children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_13__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_14__.Link, {
-                      to: "/gallery/",
+                      to: "#",
                       children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_13__.jsx)(_components_Img__WEBPACK_IMPORTED_MODULE_2__["default"], {
                         src: story.pp,
                         width: "150px",

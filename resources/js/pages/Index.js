@@ -39,6 +39,8 @@ const Index = (props) => {
 	const [leaders, setLeaders] = useState([])
 	const [posts, setPosts] = useState([])
 	const [stories, setStories] = useState([])
+	const [showStory, setShowStory] = useState()
+	const [storyImage, setStoryImage] = useState()
 
 	useEffect(() => {
 		// Get Content
@@ -144,6 +146,18 @@ const Index = (props) => {
 		})
 	}
 
+	// Show story
+	const onStory = (story) => {
+		// Hide topnav
+		props.setShowTopNav(false)
+		setStoryImage(story)
+		setShowStory(true)
+		setTimeout(() => {
+			setShowStory(false)
+			props.setShowTopNav(true)
+		}, 10000)
+	}
+
 	return (
 		<>
 			{/* Post button */}
@@ -155,6 +169,15 @@ const Index = (props) => {
 							d="M13.498.795l.149-.149a1.207 1.207 0 1 1 1.707 1.708l-.149.148a1.5 1.5 0 0 1-.059 2.059L4.854 14.854a.5.5 0 0 1-.233.131l-4 1a.5.5 0 0 1-.606-.606l1-4a.5.5 0 0 1 .131-.232l9.642-9.642a.5.5 0 0 0-.642.056L6.854 4.854a.5.5 0 1 1-.708-.708L9.44.854A1.5 1.5 0 0 1 11.5.796a1.5 1.5 0 0 1 1.998-.001zm-.644.766a.5.5 0 0 0-.707 0L1.95 11.756l-.764 3.057 3.057-.764L14.44 3.854a.5.5 0 0 0 0-.708l-1.585-1.585z" />
 					</svg>
 				</Link>}
+
+			{/* Show story */}
+			{showStory &&
+				<div id="preloader">
+					<img src={storyImage} style={{
+						maxHeight: window.innerHeight,
+						maxWidth: window.innerWidth,
+					}} />
+				</div>}
 
 			{/* <!-- Profile info area --> */}
 			<div className="row">
@@ -252,7 +275,7 @@ const Index = (props) => {
 						<h5>Stories for you</h5>
 						<div className="hidden-scroll">
 							{/* Add Story */}
-							{!stories.some((story) => story.user_id == props.auth.id) ?
+							{!stories.some((story) => story.user_id == props.auth.id) &&
 								<span>
 									<center>
 										<div className="avatar-thumbnail"
@@ -304,8 +327,11 @@ const Index = (props) => {
 											Your story
 										</h6>
 									</center>
-								</span> :
-								<span className="pt-0 px-0 pb-2">
+								</span>}
+
+							{/* Show stories */}
+							{stories.map((story, key) => (
+								<span key={key} className="pt-0 px-0 pb-2" onClick={() => onStory(story.media)}>
 									<center>
 										<div className="card avatar-thumbnail"
 											style={{
@@ -315,8 +341,8 @@ const Index = (props) => {
 												borderBottom: "2px solid #D0B216",
 												borderLeft: "2px solid #182B5C",
 											}}>
-											<Link to={"/gallery/"}>
-												<Img src={props.auth.pp} width='150px' height='150px' />
+											<Link to="#">
+												<Img src={story.pp} width='150px' height='150px' />
 											</Link>
 										</div>
 										<h6 className="mt-2 mb-0"
@@ -326,40 +352,11 @@ const Index = (props) => {
 												overflow: "hidden",
 												textOverflow: "clip"
 											}}>
-											Your story
+											{story.name}
 										</h6>
 									</center>
-								</span>}
-
-							{/* Show stories */}
-							{stories.filter((story) => story.user_id != props.auth.id)
-								.map((story, key) => (
-									<span key={key} className="pt-0 px-0 pb-2">
-										<center>
-											<div className="card avatar-thumbnail"
-												style={{
-													borderRadius: "50%",
-													borderTop: "2px solid #182B5C",
-													borderRight: "2px solid #182B5C",
-													borderBottom: "2px solid #D0B216",
-													borderLeft: "2px solid #182B5C",
-												}}>
-												<Link to={"/gallery/"}>
-													<Img src={story.pp} width='150px' height='150px' />
-												</Link>
-											</div>
-											<h6 className="mt-2 mb-0"
-												style={{
-													width: "100px",
-													whiteSpace: "nowrap",
-													overflow: "hidden",
-													textOverflow: "clip"
-												}}>
-												{story.name}
-											</h6>
-										</center>
-									</span>
-								))}
+								</span>
+							))}
 						</div>
 					</div>
 					{/* <!-- ****** Stories Area End ****** --> */}
