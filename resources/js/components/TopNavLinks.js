@@ -139,6 +139,9 @@ const TopNavLinks = (props) => {
 					<Link to={`/profile/${props.auth.id}`} className="p-3 dropdown-item border-bottom">
 						<h5>{props.auth.name}</h5>
 					</Link>
+					<Link to='/about' className="p-3 dropdown-item border-bottom">
+						<h5>About</h5>
+					</Link>
 					<Link to='#'
 						id="btnAdd"
 						className="p-3 dropdown-item border-bottom"

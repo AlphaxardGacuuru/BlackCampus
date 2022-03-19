@@ -224,22 +224,22 @@ class PostsController extends Controller
         } else {
 
             $this->validate($request, [
-                'post-text' => 'required',
+                'text' => 'required',
             ]);
 
 			// Get proper location for media
-			$media = '/storage/' . $request->input('media');
+			$media = $request->input('media') ? '/storage/' . $request->input('media') : "";
 
             /* Create new post */
             $post = new Posts;
             $post->user_id = auth()->user()->id;
-            $post->text = $request->input('post-text');
+            $post->text = $request->input('text');
             $post->media = $media;
-            $post->parameter_1 = $request->input('poll_1') ? $request->input('poll_1') : "";
-            $post->parameter_2 = $request->input('poll_2') ? $request->input('poll_2') : "";
-            $post->parameter_3 = $request->input('poll_3') ? $request->input('poll_3') : "";
-            $post->parameter_4 = $request->input('poll_4') ? $request->input('poll_4') : "";
-            $post->parameter_5 = $request->input('poll_5') ? $request->input('poll_5') : "";
+            $post->parameter_1 = $request->input('para1') ? $request->input('para1') : "";
+            $post->parameter_2 = $request->input('para2') ? $request->input('para2') : "";
+            $post->parameter_3 = $request->input('para3') ? $request->input('para3') : "";
+            $post->parameter_4 = $request->input('para4') ? $request->input('para4') : "";
+            $post->parameter_5 = $request->input('para5') ? $request->input('para5') : "";
             $post->save();
 
             return redirect('posts')->with('success', 'Post Sent');

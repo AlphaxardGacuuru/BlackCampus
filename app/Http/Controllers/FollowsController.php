@@ -52,10 +52,10 @@ class FollowsController extends Controller
             $post->save();
             $message = "Followed";
 
-            $notification = new FollowNotifications;
-            $notification->user_id = $request->input('id');
-            $notification->follower = auth()->user()->id;
-            $notification->save();
+            // $notification = new FollowNotifications;
+            // $notification->user_id = $request->input('id');
+            // $notification->follower = auth()->user()->id;
+            // $notification->save();
         }
 
 		$name = User::find($request->input('id'))->name;

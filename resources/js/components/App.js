@@ -12,6 +12,7 @@ import Profile from '../pages/Profile';
 import PostCreate from '../pages/PostCreate';
 import PostShow from '../pages/PostShow';
 import Leaders from '../pages/Leaders';
+import About from '../pages/About';
 
 function App() {
 	// Declare states
@@ -45,11 +46,6 @@ function App() {
 		axios.get(`${url}/api/home`)
 			.then((res) => setAuth(res.data))
 			.catch(() => setErrors(['Failed to fetch auth']))
-
-		// Fetch Follows Notifications
-		axios.get(`${url}/api/follow-notifications`)
-			.then((res) => setFollowNotifications(res.data))
-			.catch(() => setErrors(['Failed to fetch follow notifications']))
 
 		// Fetch Notifications
 		axios.get(`${url}/api/notifications`)
@@ -89,6 +85,10 @@ function App() {
 
 			<Route path="/leaders" exact render={() => (
 				<Leaders {...{ url, auth, setMessage, setErrors }} />
+			)} />
+
+			<Route path="/about" exact render={() => (
+				<About {...{ url, auth, setMessage, setErrors }} />
 			)} />
 
 			<BottomNav {...{ url, auth, setMessage, setErrors, setAuth }} />
